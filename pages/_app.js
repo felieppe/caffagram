@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import './topHeader.css';
+import './bottomHeader.css';
 
 function App({ Component, pageProps }) {
     return (
