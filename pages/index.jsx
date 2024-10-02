@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/Home.module.css';
-import TopHeader from './TopHeader';
-import BottomHeader from './BottomHeader';
+import TopHeader from '../components/TopHeader';
+import BottomHeader from '../components/BottomHeader';
 
 function Home() {
     return (

@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
-
+import '../styles/TopHeader.module.css';
 
 function TopHeader() {
     return (
