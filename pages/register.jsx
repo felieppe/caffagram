@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import styles from '../styles/register.css'; 
+import styles from '../styles/Register.css';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -29,11 +29,11 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); 
-    if (!validateForm()) return; 
+    setError('');
+    if (!validateForm()) return;
 
     try {
-      const response = await fetch('/api/register', { 
+      const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,9 +44,9 @@ const Register = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess(true); 
+        setSuccess(true);
         setTimeout(() => {
-          router.push('/login'); 
+          router.push('/login');
         }, 2000);
       } else {
         setError(data.message || 'Ocurrió un error en el registro');
@@ -59,8 +59,8 @@ const Register = () => {
   return (
     <div className={styles.container}>
       <h2>Crear una Cuenta</h2>
-      {error && <p className={styles.error}>{error}</p>} {Error}
-      {success && <p className={styles.success}>Cuenta creada exitosamente.</p>} {exitosamente}
+      {error && <p className={styles.error}>{error}</p>}
+      {success && <p className={styles.success}>Cuenta creada exitosamente.</p>}
       <form onSubmit={handleSubmit}>
         <input
           type="email"
