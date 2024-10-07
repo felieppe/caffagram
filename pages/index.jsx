@@ -6,9 +6,7 @@ import BottomHeader from '../components/BottomHeader';
 function Home() {
     return (
         <>
-            <TopHeader />
             <h1>Welcome to Caffagram!</h1>
-            <BottomHeader />
         </>
     )
 }
