@@ -6,6 +6,8 @@ import { faHeart as faEmptyHeart, faComment } from '@fortawesome/free-regular-sv
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import BottomHeader from '@/components/BottomHeader';
+import TopHeader from '@/components/TopHeader';
 
 function Feed() {
     const [posts, setPosts] = useState([{ id: 1, user: 'zaragsadelsabooooh', pfp: '/zarasa.jpg', description: '@bisa somo nojotro', likes: 33, comments: 3, image: '/posts/biza.jpg', liked: false }, { id: 2, user: 'zaragsadelsabooooh', pfp: '/zarasa.jpg', description: 'Que andas bizacaffa', likes: 33, comments: 3, image: '/posts/biza.jpg', liked: false }]);
@@ -24,6 +26,8 @@ function Feed() {
 
     return (
         <>
+            <TopHeader />
+
             <div className={styles.feed}>
                 <div className={styles.posts}>
                     {posts.map(post => (
@@ -66,6 +70,8 @@ function Feed() {
                     ))}
                 </div>
             </div>
+
+            <BottomHeader />
         </>
     )
 }
