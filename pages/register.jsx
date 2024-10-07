@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import styles from '../styles/Register.css';
+import styles from '../styles/Register.module.css';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -58,32 +58,32 @@ const Register = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Crear una Cuenta</h2>
+      <h2 id = "Titulo"> Crear una Cuenta</h2>
       {error && <p className={styles.error}>{error}</p>}
       {success && <p className={styles.success}>Cuenta creada exitosamente.</p>}
       <form onSubmit={handleSubmit}>
-        <input
+        <input className ="data"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Correo electrónico"
           required
         />
-        <input
+        <input className ="data"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Contraseña"
           required
         />
-        <input
+        <input className ="data"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Nombre de usuario"
           required
         />
-        <button type="submit">Registrar</button>
+        <button id ="submit" type="submit">Registrar</button>
       </form>
     </div>
   );
