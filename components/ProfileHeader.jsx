@@ -12,7 +12,6 @@ function ProfileHeader({username, profilePicture, posts, friends, description}){
                     <span>{posts} Posts</span>
                     <span>{friends} Friends</span>
                 </div>
-                <button className={styles['edit-profile-btn']}>Edit Profile</button>
             </div>
         </div>
     );
