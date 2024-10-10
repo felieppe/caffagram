@@ -20,6 +20,7 @@ function Profile() {
                 description="My profile description"
             />
             <EditProfileButton onEdit={handleEditProfile} />
+            {isEditing && <div>Formulario para completar la edición</div>} {/* Aquí podrías mostrar un formulario o redirigir */}
         </div>
     );
 }
