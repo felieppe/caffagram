@@ -1,15 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import ProfileHeader from "../components/ProfileHeader";
 import EditProfileButton from "../components/EditProfileButton";
 
 function Profile() {
     const [isEditing, setIsEditing] = useState(false);
 
-    const handleEditProfile =()=> {
+    const handleEditProfile = () => {
         setIsEditing(true);
-        //pense en hacerlo asi para que rediriga a una pagina de edicion
-        //cuando quieras editar tu perfil nose :)
-        console.log("Editing Profile...")
+        console.log("Editing Profile...");
     };
 
     return (
@@ -22,7 +20,6 @@ function Profile() {
                 description="My profile description"
             />
             <EditProfileButton onEdit={handleEditProfile} />
-            {isEditing && <div>formulario pa completar edicion </div>}
         </div>
     );
 }

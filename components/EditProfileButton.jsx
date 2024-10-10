@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import styles from '../styles/EditProfileButton.module.css';
 
 function EditProfileButton({ onEdit}){

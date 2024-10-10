@@ -1,60 +1,126 @@
-.profile-header {
+/* .profile-header {
     display: flex;
+    flex-direction: column;
     align-items: center;
     padding: 20px;
     background-color: #fff;
     border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
 }
+
+.profile-picture-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
 .profile-picture {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
+    border: 3px solid #ddd;
     object-fit: cover;
-    margin-right: 20px;
 }
 
 .profile-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
+    text-align: center;
 }
 
-.profile-info h1 {
-    margin: 0;
-    font-size: 24px;
-    color: #333;
-}
-
-.profile-info p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #777;
-}
-
-.stats {
-    display: flex;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.stats span {
+.profile-username {
+    font-size: 28px;
     font-weight: bold;
     color: #333;
+    margin-bottom: 10px;
 }
 
-.edit-profile-btn {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
+.profile-description {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-item strong {
+    font-size: 20px;
+    color: #333;
+}
+
+.stat-item span {
     font-size: 14px;
-    transition: background-color 0.3s ease;
+    color: #888;
 }
 
-.edit-profile-btn:hover {
-    background-color: #0056b3;
+   */
+   .profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.profile-picture-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #ddd;
+    object-fit: cover;
+}
+
+.profile-info {
+    text-align: center;
+}
+
+.profile-username {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.profile-description {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-item strong {
+    font-size: 20px;
+    color: #333;
+}
+
+.stat-item span {
+    font-size: 14px;
+    color: #888;
 }
