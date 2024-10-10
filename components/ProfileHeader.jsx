@@ -1,6 +1,7 @@
 import React from "react";
 import styles from '../styles/ProfileHeader.module.css';
 
+
 function ProfileHeader({ username, profilePicture, posts, friends, description }) {
     return (
         <div className={styles["profile-header"]}>

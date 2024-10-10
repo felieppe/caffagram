@@ -3,6 +3,7 @@ import ProfileHeader from "../components/ProfileHeader";
 import EditProfileButton from "../components/EditProfileButton";
 
 function Profile() {
+
     const [isEditing, setIsEditing] = useState(false);
 
     const handleEditProfile = () => {
@@ -18,9 +19,10 @@ function Profile() {
                 posts={153}
                 friends={209}
                 description="My profile description"
+                onEdit={handleEditProfile}
             />
             <EditProfileButton onEdit={handleEditProfile} />
-            {isEditing && <div>Formulario para completar la edición</div>} {/* Aquí podrías mostrar un formulario o redirigir */}
+            {isEditing && <div>Formulario para completar la edición</div>} 
         </div>
     );
 }
