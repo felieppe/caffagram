@@ -8,20 +8,26 @@ import Image from 'next/image';
 import Link from 'next/link';
 import BottomHeader from '@/components/BottomHeader';
 import TopHeader from '@/components/TopHeader';
+import { fetchFeed, fetchProfileById, likePost } from '@/utils/api';
 
-function Feed() {
-    const [posts, setPosts] = useState([{ id: 1, user: 'zaragsadelsabooooh', pfp: '/zarasa.jpg', description: '@bisa somo nojotro', likes: 33, comments: 3, image: '/posts/biza.jpg', liked: false }, { id: 2, user: 'zaragsadelsabooooh', pfp: '/zarasa.jpg', description: 'Que andas bizacaffa', likes: 33, comments: 3, image: '/posts/biza.jpg', liked: false }]);
+function Feed({ endpointPosts = [], jwt = '' }) {
+    const [posts, setPosts] = useState(endpointPosts);
 
-    const handleLike = (postId) => {
-        const newPosts = posts.map(post => {
-            if (post.id == postId) {
-                post.liked = !post.liked;
-                post.liked ? post.likes++ : post.likes--;
-            }
-            return post;
-        });
+    const handleLike = (id, userId) => {
+        if (!jwt) return;
 
-        setPosts(newPosts);
+        // You can only like a post once, but it is not implemented the way to unlike the photo.
+        if (!(posts.find(post => post._id == id).likes.includes(userId))) {
+            likePost(id, jwt).then((_) => {
+                setPosts(posts.map(post => {
+                    if (post._id == id) {
+                        post.liked = !post.liked;
+                        post.liked ? post.likes.push(post.user._id) : post.likes.pop(post.user._id);
+                    }
+                    return post;
+                }));
+            })
+        }
     }
 
     return (
@@ -31,13 +37,14 @@ function Feed() {
             <div className={styles.feed}>
                 <div className={styles.posts}>
                     {posts.map(post => (
-                        <div key={post.id} data-id={post.id} className={styles.post}>
+                        <div key={post._id} data-id={post._id} className={styles.post}>
                             <div className={styles.post__top}>
                                 <div className={styles.post__top__user}>
-                                    <Link href={`/profile/${post.user}`}>
-                                        <Image className={styles.post__top__user__img} src={post.pfp} alt="User" width={30} height={30} />
+                                    <Link href={`/profile/${post.user.username}`}>
+                                        {/* I suppose this wont work. Backend does not server images URL well, just gives source path. */}
+                                        <Image className={styles.post__top__user__img} src={fetchProfileById(post.user._id, jwt).profilePicture} alt="User" width={30} height={30} />
                                     </Link>
-                                    <p>@{post.user}</p>
+                                    <p>@{post.user.username}</p>
                                 </div>
 
                                 <div className={styles.post__top__options}>
@@ -46,25 +53,26 @@ function Feed() {
                             </div>
 
                             <div className={styles.post__image}>
-                                <Image src={post.image} alt="Post" width={350} height={300} />
+                                {/* Backend should server URL with image's source too. Impossible to import dynamically every image SRC from require(). */}
+                                <Image src={""} alt="Post" width={350} height={300} />
                             </div>
 
                             <div className={styles.post__actions}>
-                                <FontAwesomeIcon icon={post.liked ? faFilledHeart : faEmptyHeart} className={post.liked ? styles.post__liked : null} onClick={ () => { handleLike(post.id) } }/>
+                                <FontAwesomeIcon icon={post.likes.includes(post.user._id) ? faFilledHeart : faEmptyHeart} className={post.liked ? styles.post__liked : null} onClick={ () => { handleLike(post._id, post.user._id) } }/>
                                 <FontAwesomeIcon icon={faComment} />
                             </div>
 
                             <div className={styles.post__likes}>
-                                {post.likes} Likes
+                                {post.likes.length} Likes
                             </div>
 
                             <div className={styles.post__description}>
-                                <b>{post.user}</b>
-                                <p>{post.description}</p>
+                                <b>{post.user.username}</b>
+                                <p>{post.caption}</p>
                             </div>
 
                             <div className={styles.post__comments}>
-                                View all {post.comments} comments
+                                { post.comments.length > 0 ? `View all {post.comments.length} comments` : null}
                             </div>
                         </div>
                     ))}
@@ -77,3 +85,11 @@ function Feed() {
 }
 
 export default Feed
+
+export async function getServerSideProps({ req }) {
+    const jwt = req.cookies.token || null;
+    if (jwt == null) { return { redirect: { destination: '/login', permanent: false }} }
+
+    const posts = await fetchFeed(jwt).catch((_) => { return [] });
+    return { props: { endpointPosts: (posts != undefined ? posts : []), jwt: jwt } }
+}
