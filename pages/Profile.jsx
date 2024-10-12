@@ -3,6 +3,7 @@ import ProfileHeader from "../components/ProfileHeader";
 import EditProfileButton from "../components/EditProfileButton";
 import BottomHeader from "../components/BottomHeader";
 import PhotoGallery from "../components/PhotoGallery";
+import TopHeaderProfile from "@/components/TopHeaderProfile";
 
 function Profile() {
     
@@ -38,7 +39,6 @@ function Profile() {
     ];
     return (
         <div>
-            {/* Mostrar el formulario de edición si está en modo edición */}
             {isEditing ? (
                 <div>
                     <h2>Edit Profile</h2>
@@ -73,8 +73,9 @@ function Profile() {
                     </form>
                 </div>
             ) : (
-                // Mostrar la vista de perfil si no estamos en modo edición
+
                 <div>
+                    <TopHeaderProfile/>
                     <ProfileHeader
                         username={profile.username}
                         profilePicture={profile.profilePicture}

@@ -1,0 +1,17 @@
+.top_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.createPost, .menuButton {
+    background-color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
