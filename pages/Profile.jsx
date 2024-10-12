@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ProfileHeader from "../components/ProfileHeader";
 import EditProfileButton from "../components/EditProfileButton";
+import BottomHeader from "../components/BottomHeader";
 
 function Profile() {
 
@@ -28,6 +29,7 @@ function Profile() {
             />
             <EditProfileButton onEdit={handleEditProfile} />
             {isEditing && <div>Formulario para completar la edición</div>} 
+            <BottomHeader />
         </div>
     );
 }
