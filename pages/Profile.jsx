@@ -7,9 +7,14 @@ function Profile() {
     const [isEditing, setIsEditing] = useState(false);
 
     const handleEditProfile = () => {
-        setIsEditing(true);
+        setIsEditing(true);     
         console.log("Editing Profile...");
     };
+
+    const photos = [
+        "https://upload.wikimedia.org/wikipedia/en/d/dc/MichaelScott.png"
+       
+    ];
 
     return (
         <div>
