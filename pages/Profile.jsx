@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ProfileHeader from "../components/ProfileHeader";
 import EditProfileButton from "../components/EditProfileButton";
 import BottomHeader from "../components/BottomHeader";
+import PhotoGallery from "../components/PhotoGallery";
 
 function Profile() {
 
@@ -13,6 +14,8 @@ function Profile() {
     };
 
     const photos = [
+        "https://upload.wikimedia.org/wikipedia/en/d/dc/MichaelScott.png",
+        "https://upload.wikimedia.org/wikipedia/en/d/dc/MichaelScott.png",
         "https://upload.wikimedia.org/wikipedia/en/d/dc/MichaelScott.png"
        
     ];
@@ -29,6 +32,7 @@ function Profile() {
             />
             <EditProfileButton onEdit={handleEditProfile} />
             {isEditing && <div>Formulario para completar la edición</div>} 
+            <PhotoGallery photos={photos} />
             <BottomHeader />
         </div>
     );
