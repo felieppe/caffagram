@@ -42,7 +42,8 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                                 <div className={styles.post__top__user}>
                                     <Link href={`/profile/${post.user.username}`}>
                                         {/* I suppose this wont work. Backend does not server images URL well, just gives source path. */}
-                                        <Image className={styles.post__top__user__img} src={fetchProfileById(post.user._id, jwt).profilePicture} alt="User" width={30} height={30} />
+                                        {/* It is not performance-friendly to fetch twice the profile just for getting the profile picture URL. */}
+                                        <Image className={styles.post__top__user__img} src={fetchProfileById(post.user._id, jwt).profilePicture ? fetchProfileById(post.user._id, jwt).profilePicture : "/default-profile.webp"} alt="User" width={30} height={30} />
                                     </Link>
                                     <p>@{post.user.username}</p>
                                 </div>
