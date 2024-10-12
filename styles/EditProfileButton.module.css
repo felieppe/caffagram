@@ -1,7 +1,6 @@
 .edit-profile-btn {
-    width: 90%;
-    max-width: 300px;
-    padding: 12px 0;
+    width: 100%;
+    padding: 15px;
     background-color: #f0f0f0;
     color: #333;
     border: none;
@@ -11,6 +10,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-align: center;
+    display: block;
 }
 
 .edit-profile-btn:hover {
