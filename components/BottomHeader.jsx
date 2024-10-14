@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import styles from '../styles/BottomHeader.module.css';
 
-function BottomHeader({ profileImageUrl })
+function BottomHeader({ profileImageUrl }){
     const handleHomeClick = () => {
         window.location.href = "http://localhost:3000/";
     };
