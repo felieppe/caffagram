@@ -1,38 +1,46 @@
 .container {
-  max-width: 450px;
-  margin: 0 auto;
-  padding: 25px;
-  background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 30px; 
+  background-color: #f9f9f9;
   min-height: 100vh;
+  border: 3px solid black;
+  border-radius: 8px; 
 }
 
 .form-container {
   width: 100%;
   padding: 20px;
-  border: 1px solid #ddd; 
-  border-radius: 
-
 }
 
 #h2 {
-  font-size: 1.8rem;
-  margin-bottom: 100px; 
+  font-family: 'Arial, sans-serif'; 
+  font-size: 2.5rem; 
+  margin-bottom: 40px; 
+  text-align: center;
 }
 
 .data {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 20px; 
+  width: calc(100% - 24px);
+  padding: 15px; 
+  margin-bottom: 25px; 
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
-.error, .success {
+.error {
+  color: red; 
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.success {
   font-size: 1.1rem;
   margin-bottom: 20px;
   text-align: center;
@@ -40,17 +48,16 @@
 
 .submitButton {
   width: 100%;
-  padding: 12px;
-  margin-top: 30px; 
-  background-color: #5ba7a0;
+  padding: 15px; 
+  margin-top: 30px;
+  background-color: #627f72; 
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1.2rem;
-  transition: background-color 0.3s ease;
 }
 
 .submitButton:hover {
-  background-color: #4a8986;
+  background-color: #659477;
 }

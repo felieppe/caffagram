@@ -8,11 +8,13 @@ const PostView = () => {
   const router = useRouter();
   const { postId } = router.query; 
 
+  const jwt = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+
   useEffect(() => {
     if (postId) {
       const fetchPost = async () => {
         try {
-          const data = await getPostById(postId); 
+          const data = await getPostById(postId, jwt); 
           setPost(data);
         } catch (error) {
           setError('Error al cargar el post.');
@@ -21,7 +23,7 @@ const PostView = () => {
 
       fetchPost();
     }
-  }, [postId]);
+  }, [postId, jwt]);
 
   if (error) {
     return <p>{error}</p>;
