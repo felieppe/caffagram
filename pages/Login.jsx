@@ -24,10 +24,6 @@ function Login() {
 
   function handleSubmit(e){
     if (!validateForm(e)) return alert(error);
-
-    console.log("Email: ", e.target.email.value)
-    console.log("Password: ", e.target.password.value)
-
     e.preventDefault();
 
     let data = {email: e.target.email.value, password: e.target.password.value}
@@ -41,7 +37,6 @@ function Login() {
 
         window.location.href = '/feed';
       }}).catch((error) => {
-      console.error('Error:', error)
     })
   }
   

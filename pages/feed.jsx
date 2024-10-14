@@ -17,7 +17,6 @@ function Feed({ endpointPosts = [], jwt = '' }) {
 
         // You can only like a post once, but it is not implemented the way to unlike the photo.
         if (!(posts.find(post => post._id == id).likes.includes(userId))) {
-            console.log(jwt)
             likePost(id, jwt).then((_) => {
                 setPosts(posts.map(post => {
                     if (post._id == id) {
