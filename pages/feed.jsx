@@ -1,5 +1,4 @@
 import styles from '../styles/Feed.module.css'
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faHeart as faFilledHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faEmptyHeart, faComment } from '@fortawesome/free-regular-svg-icons'
@@ -80,7 +79,8 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                 </div>
             </div>
 
-            <BottomHeader />
+            <BottomHeader profileImageUrl = {""}/>
+            {/* <BottomHeader profileImageUrl={fetchProfile(jwt).profilePicture || ""}/> */}
         </>
     )
 }
@@ -88,8 +88,8 @@ function Feed({ endpointPosts = [], jwt = '' }) {
 export default Feed
 
 export async function getServerSideProps({ req }) {
-    const jwt = req.cookies.token || null;
-    if (jwt == null) { return { redirect: { destination: '/login', permanent: false }} }
+    const jwt = req.cookies.token || "";
+    if (jwt == null) { return { redirect: { destination: '/Login', permanent: false }} }
 
     const posts = await fetchFeed(jwt).catch((_) => { return [] });
     return { props: { endpointPosts: (posts != undefined ? posts : []), jwt: jwt } }
