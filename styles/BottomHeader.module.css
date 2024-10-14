@@ -22,3 +22,9 @@
     height: 50px;
     border-radius: 50%;
 }
+
+@media (min-width: 768px) {
+    .bottom_header {
+        display: none;
+    }
+}
