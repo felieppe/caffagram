@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/Register.module.css';
+import { register } from '../utils/api';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -30,6 +31,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
     if (!validateForm()) return;
 
     try {
@@ -58,32 +60,36 @@ const Register = () => {
 
   return (
     <div className={styles.container}>
-      <h2 id = "Titulo"> Crear una Cuenta</h2>
+      <h2>Crear una Cuenta</h2>
       {error && <p className={styles.error}>{error}</p>}
       {success && <p className={styles.success}>Cuenta creada exitosamente.</p>}
+
       <form onSubmit={handleSubmit}>
-        <input className ="data"
+        <input
+          className={styles.data}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Correo electrónico"
           required
         />
-        <input className ="data"
+        <input
+          className={styles.data}
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Contraseña"
           required
         />
-        <input className ="data"
+        <input
+          className={styles.data}
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Nombre de usuario"
           required
         />
-        <button id ="submit" type="submit">Registrar</button>
+        <button className={styles.submitButton} type="submit">Registrar</button>
       </form>
     </div>
   );
