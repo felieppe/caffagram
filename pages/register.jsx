@@ -46,7 +46,7 @@ const Register = () => {
       if (response.ok) {
         setSuccess(true);
         setTimeout(() => {
-          router.push('/login');
+          navigate('/login');
         }, 2000);
       } else {
         setError(data.message || 'Ocurrió un error en el registro');
@@ -58,32 +58,42 @@ const Register = () => {
 
   return (
     <div className={styles.container}>
-      <h2 id = "Titulo"> Crear una Cuenta</h2>
+      <div className={styles.logo_container}>
+        <img 
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRNYYPTbBU17CbvR5JIjgU7TVqu0T6ry7A9g&s" 
+          alt="UCU logo" 
+          className={styles.logo}
+        />
+      </div>
+      <h2 className={styles.title}>Crear una Cuenta</h2>
       {error && <p className={styles.error}>{error}</p>}
       {success && <p className={styles.success}>Cuenta creada exitosamente.</p>}
-      <form onSubmit={handleSubmit}>
-        <input className ="data"
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Correo electrónico"
+          className={styles.input}
           required
         />
-        <input className ="data"
+        <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Contraseña"
+          className={styles.input}
           required
         />
-        <input className ="data"
+        <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Nombre de usuario"
+          className={styles.input}
           required
         />
-        <button id ="submit" type="submit">Registrar</button>
+        <button type="submit" className={styles.button}>Registrar</button>
       </form>
     </div>
   );
