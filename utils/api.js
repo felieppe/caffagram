@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3001/api'
+const BASE_URL = 'http://localhost:3001/api';
 
 async function register(data) {
     const endpoint = `${BASE_URL}/auth/register`;
@@ -8,7 +8,7 @@ async function register(data) {
     try {
         const response = await axios.post(endpoint, data);
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
 async function login(data) {
@@ -17,7 +17,7 @@ async function login(data) {
     try {
         const response = await axios.post(endpoint, data);
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
 async function fetchProfileById(id, jwt) {
@@ -30,7 +30,7 @@ async function fetchProfileById(id, jwt) {
             }
         });
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
 async function uploadPost(jwt, post) {
@@ -41,14 +41,14 @@ async function uploadPost(jwt, post) {
     formData.append('caption', post.caption);
 
     try {
-        const response = await axios.post(endpoint, {
+        const response = await axios.post(endpoint, formData, { 
             headers: {
                 'Authorization': `Bearer ${jwt}`,
                 'Content-Type': 'multipart/form-data'
             }
-        }, post);
+        });
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
 async function fetchFeed(jwt) {
@@ -61,33 +61,33 @@ async function fetchFeed(jwt) {
             }
         });
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
 async function commentPost(id, jwt, comment) {
     const endpoint = `${BASE_URL}/posts/${id}/comments`;
 
     try {
-        const response = await axios.post(endpoint, {
+        const response = await axios.post(endpoint, comment, { 
             headers: {
                 'Authorization': `Bearer ${jwt}`
             }
-        }, comment);
+        });
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
 async function likePost(id, jwt) {
     const endpoint = `${BASE_URL}/posts/${id}/likes`;
 
     try {
-        const response = await axios.post(endpoint, {
+        const response = await axios.post(endpoint, {}, { 
             headers: {
                 'Authorization': `Bearer ${jwt}`
             }
         });
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
 export { register, login, fetchProfileById, uploadPost, fetchFeed, commentPost, likePost };

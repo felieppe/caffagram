@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getPostById, likePost, commentOnPost } from '../utils/api';
+import { getPostById, likePost, commentOnPost } from '../utils/api'; 
 
 const PostView = () => {
   const [post, setPost] = useState(null);
