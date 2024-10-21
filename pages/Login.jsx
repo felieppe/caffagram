@@ -74,7 +74,7 @@ function Login() {
         <button type="submit" className={styles.login_button}>Login</button>
       </form>
       <p className={styles.signup_text}>
-        Create account <a href="/signup" className={styles.signup_link}>here</a>
+        Create account <a href="/register" className={styles.register_link}>here</a>
       </p>
     </div>
   );
