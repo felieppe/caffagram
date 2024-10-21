@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
 import styles from '../styles/Register.module.css';
+
+import { register } from '@/utils/api';
+import { useState, useEffect } from 'react';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -8,7 +9,6 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const router = useRouter();
 
   const validateForm = () => {
     if (!email || !password || !username) {
@@ -32,29 +32,27 @@ const Register = () => {
     setError('');
     if (!validateForm()) return;
 
-    try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password, username }),
-      });
+    const data = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+      username: e.target.username.value
+    };
 
-      const data = await response.json();
+    register(data).then((res) => {
+      let {_id, token } = res
+      document.cookie = `token=${token}; max-age=3600; path=/`;
 
-      if (response.ok) {
-        setSuccess(true);
-        setTimeout(() => {
-          navigate('/login');
-        }, 2000);
-      } else {
-        setError(data.message || 'Ocurrió un error en el registro');
-      }
-    } catch (error) {
-      setError('Error de servidor. Intenta más tarde.');
-    }
+      window.location.href = '/feed';
+    }).catch((err) => {
+      setError(err.response.data.message);
+    })
   };
+
+  useEffect(() => {
+    if (document.cookie.includes('token')) {
+      window.location.href = '/feed';
+    }
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -70,6 +68,7 @@ const Register = () => {
       {success && <p className={styles.success}>Cuenta creada exitosamente.</p>}
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
+          id='email'
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -78,6 +77,7 @@ const Register = () => {
           required
         />
         <input
+          id='password'
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -86,6 +86,7 @@ const Register = () => {
           required
         />
         <input
+          id='username'
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
