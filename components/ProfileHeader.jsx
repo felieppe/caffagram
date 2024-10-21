@@ -23,7 +23,7 @@ function ProfileHeader({ username, profilePicture, posts, friends, description }
                     <div className={styles["stat-item"]}>
                         <strong>{friends}</strong>
                         <span>Friends</span>
-                    </div>
+                     </div>
                 </div>
             </div>
         </div>
