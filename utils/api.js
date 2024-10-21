@@ -78,7 +78,7 @@ async function commentPost(id, jwt, comment) {
 }
 
 async function likePost(id, jwt) {
-    const endpoint = `${BASE_URL}/posts/${id}/likes`;
+    const endpoint = `${BASE_URL}/posts/${id}/like`;
 
     try {
         const response = await axios.post(endpoint, {}, { 

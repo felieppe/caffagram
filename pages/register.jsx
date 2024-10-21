@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
 import styles from '../styles/Register.module.css';
 import { register } from '../utils/api';
+
+import { register } from '@/utils/api';
+import { useState, useEffect } from 'react';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -9,7 +10,6 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const router = useRouter();
 
   const validateForm = () => {
     if (!email || !password || !username) {
@@ -34,62 +34,69 @@ const Register = () => {
 
     if (!validateForm()) return;
 
-    try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password, username }),
-      });
+    const data = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+      username: e.target.username.value
+    };
 
-      const data = await response.json();
+    register(data).then((res) => {
+      let {_id, token } = res
+      document.cookie = `token=${token}; max-age=3600; path=/`;
 
-      if (response.ok) {
-        setSuccess(true);
-        setTimeout(() => {
-          router.push('/login');
-        }, 2000);
-      } else {
-        setError(data.message || 'Ocurrió un error en el registro');
-      }
-    } catch (error) {
-      setError('Error de servidor. Intenta más tarde.');
-    }
+      window.location.href = '/feed';
+    }).catch((err) => {
+      setError(err.response.data.message);
+    })
   };
+
+  useEffect(() => {
+    if (document.cookie.includes('token')) {
+      window.location.href = '/feed';
+    }
+  }, [])
 
   return (
     <div className={styles.container}>
-      <h2>Crear una Cuenta</h2>
+      <div className={styles.logo_container}>
+        <img 
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRNYYPTbBU17CbvR5JIjgU7TVqu0T6ry7A9g&s" 
+          alt="UCU logo" 
+          className={styles.logo}
+        />
+      </div>
+      <h2 className={styles.title}>Crear una Cuenta</h2>
       {error && <p className={styles.error}>{error}</p>}
       {success && <p className={styles.success}>Cuenta creada exitosamente.</p>}
-
-      <form onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <input
-          className={styles.data}
+          id='email'
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Correo electrónico"
+          className={styles.input}
           required
         />
         <input
-          className={styles.data}
+          id='password'
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Contraseña"
+          className={styles.input}
           required
         />
         <input
-          className={styles.data}
+          id='username'
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Nombre de usuario"
+          className={styles.input}
           required
         />
-        <button className={styles.submitButton} type="submit">Registrar</button>
+        <button type="submit" className={styles.button}>Registrar</button>
       </form>
     </div>
   );
