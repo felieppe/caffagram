@@ -1,4 +1,5 @@
 import styles from '../styles/Register.module.css';
+import { register } from '../utils/api';
 
 import { register } from '@/utils/api';
 import { useState, useEffect } from 'react';
@@ -30,6 +31,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
     if (!validateForm()) return;
 
     const data = {

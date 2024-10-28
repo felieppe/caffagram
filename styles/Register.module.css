@@ -51,9 +51,10 @@
 }
 
 .error {
-  color: #ff0000;
-  font-size: 0.9rem;
-  margin-bottom: 10px;
+  color: red; 
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .success {
