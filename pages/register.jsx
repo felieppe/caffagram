@@ -1,8 +1,8 @@
 import styles from '../styles/Register.module.css';
-import { register } from '../utils/api';
 
 import { register } from '@/utils/api';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -59,10 +59,12 @@ const Register = () => {
   return (
     <div className={styles.container}>
       <div className={styles.logo_container}>
-        <img 
+        <Image 
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRNYYPTbBU17CbvR5JIjgU7TVqu0T6ry7A9g&s" 
           alt="UCU logo" 
           className={styles.logo}
+          width={100}
+          height={100}
         />
       </div>
       <h2 className={styles.title}>Crear una Cuenta</h2>

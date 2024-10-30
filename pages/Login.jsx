@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
 import styles from '../styles/Login.module.css';
+
 import { login } from "@/utils/api";
+import React, { useEffect, useState } from "react"; 
+import Image from 'next/image';
+import Link from 'next/link';
 
 function Login() {
   const [error, setError] = useState('')
@@ -49,10 +52,12 @@ function Login() {
   return (
     <div className={styles.login_container}>
       <div className={styles.logo_container}>
-        <img 
+        <Image 
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRNYYPTbBU17CbvR5JIjgU7TVqu0T6ry7A9g&s" 
           alt="Caffagram Logo" 
           className={styles.logo}
+          width={100}
+          height={100}
         />
       </div>
       <h1 className={styles.title}>Caffagram</h1>
@@ -74,7 +79,7 @@ function Login() {
         <button type="submit" className={styles.login_button}>Login</button>
       </form>
       <p className={styles.signup_text}>
-        Create account <a href="/register" className={styles.register_link}>here</a>
+        Create account <Link href="/register" className={styles.register_link}>here</Link>
       </p>
     </div>
   );

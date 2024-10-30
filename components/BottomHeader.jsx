@@ -1,7 +1,9 @@
-import React from 'react';
+import styles from '../styles/BottomHeader.module.css';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
-import styles from '../styles/BottomHeader.module.css';
+import React from 'react';
+import Image from 'next/image';
 
 function BottomHeader({ profileImageUrl }){
     const handleHomeClick = () => {
@@ -12,7 +14,7 @@ function BottomHeader({ profileImageUrl }){
             <button onClick={handleHomeClick} className={styles.homeButton}>
                 <FontAwesomeIcon icon={faHouse} />
             </button>
-            <img id={styles.Foto} src={profileImageUrl ? profileImageUrl : "/default-profile.webp"} alt="Foto de Perfil" />
+            <Image id={styles.Foto} src={profileImageUrl ? profileImageUrl : "/default-profile.webp"} alt="Foto de Perfil" width={30} height={30}/>
         </div>
     )
 }

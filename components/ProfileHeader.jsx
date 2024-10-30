@@ -1,15 +1,18 @@
-import React from "react";
 import styles from '../styles/ProfileHeader.module.css';
 
+import React from "react";
+import Image from 'next/image';
 
 function ProfileHeader({ username, profilePicture, posts, friends, description }) {
     return (
         <div className={styles["profile-header"]}>
             <div className={styles["profile-picture-container"]}>
-                <img
+                <Image
                     src={profilePicture}
                     alt={`${username}'s profile`}
                     className={styles["profile-picture"]}
+                    width={150}
+                    height={150}
                 />
             </div>
             <div className={styles["profile-info"]}>
