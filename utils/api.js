@@ -129,4 +129,43 @@ async function editMyProfile(jwt, data) {
     } catch (err) { throw err }
 }
 
-export { register, login, fetchProfileById, uploadPost, fetchFeed, commentPost, likePost, fetchAllProfiles, addFriendById, editMyProfile };
+async function getCommentById(id, jwt) {
+    const endpoint = `${BASE_URL}/posts/comments/${id}`;
+
+    try {
+        const response = await axios.get(endpoint, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`
+            }
+        });
+        return response.data;
+    } catch (err) { throw err }
+}
+
+async function removeLike(id, jwt) {
+    const endpoint = `${BASE_URL}/posts/${id}/like`;
+
+    try {
+        const response = await axios.delete(endpoint, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`
+            }
+        });
+        return response.data;
+    } catch (err) { throw err }
+}
+
+async function removeFriendById(id, jwt) {
+    const endpoint = `${BASE_URL}/user/remove-friend/${id}`;
+
+    try {
+        const response = await axios.delete(endpoint, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`
+            }
+        });
+        return response.data;
+    } catch (err) { throw err }
+}
+
+export { register, login, fetchProfileById, uploadPost, fetchFeed, commentPost, likePost, fetchAllProfiles, addFriendById, editMyProfile, getCommentById, removeLike, removeFriendById };
