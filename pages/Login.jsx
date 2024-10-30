@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from '../styles/Login.module.css';
 import { login } from "@/utils/api";
+import { UserContext } from "./_app";
 
 function Login() {
   const [error, setError] = useState('')
+  const { setUser } = useContext(UserContext)
 
   const validateForm = (e) => {
     if (!e.target.email.value || !e.target.password.value) {
@@ -32,8 +34,10 @@ function Login() {
         setError(res.error);
         return alert(error)
       } else {
-        let {_id, token } = res
+        let {_id, username, token } = res
+        
         document.cookie = `token=${token}; max-age=3600; path=/`;
+        setUser({ id: _id, username, token });
 
         window.location.href = '/feed';
       }}).catch((error) => {
