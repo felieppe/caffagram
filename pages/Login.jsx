@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 function Login() {
   const [error, setError] = useState('')
+  const { setUser } = useContext(UserContext)
 
   const validateForm = (e) => {
     if (!e.target.email.value || !e.target.password.value) {
@@ -35,8 +36,10 @@ function Login() {
         setError(res.error);
         return alert(error)
       } else {
-        let {_id, token } = res
+        let {_id, username, token } = res
+        
         document.cookie = `token=${token}; max-age=3600; path=/`;
+        setUser({ id: _id, username, token });
 
         window.location.href = '/feed';
       }}).catch((error) => {

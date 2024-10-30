@@ -90,4 +90,82 @@ async function likePost(id, jwt) {
     } catch (err) { throw err; }
 }
 
-export { register, login, fetchProfileById, uploadPost, fetchFeed, commentPost, likePost };
+async function fetchAllProfiles(jwt) {
+    const endpoint = `${BASE_URL}/user/all`;
+
+    try {
+        const response = await axios.get(endpoint, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`
+            }
+        });
+        return response.data;
+    } catch (err) { throw err }
+}
+
+async function addFriendById(id, jwt) {
+    const endpoint = `${BASE_URL}/user/add-friend/${id}`;
+
+    try {
+        const response = await axios.post(endpoint, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`
+            }
+        });
+        return response.data;
+    } catch (err) { throw err }
+}
+
+async function editMyProfile(jwt, data) {
+    const endpoint = `${BASE_URL}/profile/edit`;
+
+    try {
+        const response = await axios.post(endpoint, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`
+            }
+        }, data);
+        return response.data;
+    } catch (err) { throw err }
+}
+
+async function getCommentById(id, jwt) {
+    const endpoint = `${BASE_URL}/posts/comments/${id}`;
+
+    try {
+        const response = await axios.get(endpoint, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`
+            }
+        });
+        return response.data;
+    } catch (err) { throw err }
+}
+
+async function removeLike(id, jwt) {
+    const endpoint = `${BASE_URL}/posts/${id}/like`;
+
+    try {
+        const response = await axios.delete(endpoint, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`
+            }
+        });
+        return response.data;
+    } catch (err) { throw err }
+}
+
+async function removeFriendById(id, jwt) {
+    const endpoint = `${BASE_URL}/user/remove-friend/${id}`;
+
+    try {
+        const response = await axios.delete(endpoint, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`
+            }
+        });
+        return response.data;
+    } catch (err) { throw err }
+}
+
+export { register, login, fetchProfileById, uploadPost, fetchFeed, commentPost, likePost, fetchAllProfiles, addFriendById, editMyProfile, getCommentById, removeLike, removeFriendById };
