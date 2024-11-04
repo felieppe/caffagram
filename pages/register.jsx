@@ -1,5 +1,4 @@
 import styles from '../styles/Register.module.css';
-import { register } from '../utils/api';
 
 import { register } from '@/utils/api';
 import { useState, useEffect } from 'react';
