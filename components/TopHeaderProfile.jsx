@@ -7,7 +7,7 @@ import styles from '../styles/TopHeaderProfile.module.css';
 function TopHeaderProfile() {
     return (
         <div className={styles.top_header}>
-            <h1>Caffagram</h1>
+            <img src="/logo.svg" alt="Caffagram Logo" />
             <div className={styles.icons}>
                 <button className={styles.createPost}>
                     <FontAwesomeIcon icon={faSquarePlus} />
