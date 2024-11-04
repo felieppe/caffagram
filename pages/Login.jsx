@@ -54,12 +54,12 @@ function Login() {
     <div className={styles.login_container}>
       <div className={styles.logo_container}>
         <img 
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRNYYPTbBU17CbvR5JIjgU7TVqu0T6ry7A9g&s" 
+          src="/logo.svg" 
           alt="Caffagram Logo" 
           className={styles.logo}
         />
       </div>
-      <h1 className={styles.title}>Caffagram</h1>
+      <h1 className={styles.title}>Ingresa en tu cuenta</h1>
       <form className={styles.login_form} onSubmit={handleSubmit}>
         <input
           type="email"
