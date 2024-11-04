@@ -1,5 +1,4 @@
 import styles from '../styles/Register.module.css';
-import { register } from '../utils/api';
 
 import { register } from '@/utils/api';
 import { useState, useEffect } from 'react';
@@ -97,6 +96,10 @@ const Register = () => {
           required
         />
         <button type="submit" className={styles.button}>Registrar</button>
+
+        <p className={styles.login__text}>
+          Create account <a href="/login " className={styles.login__link}>here</a>
+        </p>
       </form>
     </div>
   );
