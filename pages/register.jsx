@@ -1,5 +1,4 @@
 import styles from '../styles/Register.module.css';
-import { register } from '../utils/api';
 
 import { register } from '@/utils/api';
 import { useState, useEffect } from 'react';
@@ -60,8 +59,8 @@ const Register = () => {
     <div className={styles.container}>
       <div className={styles.logo_container}>
         <img 
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRNYYPTbBU17CbvR5JIjgU7TVqu0T6ry7A9g&s" 
-          alt="UCU logo" 
+          src="/logo.svg" 
+          alt="Caffagram Logo" 
           className={styles.logo}
         />
       </div>
