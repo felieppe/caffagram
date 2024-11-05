@@ -3,6 +3,12 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.top_header img {
+    width: 120px;
+    height: auto;
+}
+
 .icons {
     display: flex;
     align-items: center;

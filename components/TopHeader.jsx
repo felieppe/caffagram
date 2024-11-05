@@ -7,7 +7,7 @@ import styles from '../styles/TopHeader.module.css';
 function TopHeader() {
     return (
         <div className={styles.top_header}>
-            <h1>Caffagram</h1>
+            <img src="/logo.svg" alt="Caffagram Logo" />
             <div className={styles.button_group}>
                 <button className={styles.likeButton}>
                     <FontAwesomeIcon icon={faHeart} />
