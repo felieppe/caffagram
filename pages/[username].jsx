@@ -10,7 +10,8 @@ import { useEffect, useState } from "react";
 
 function User({ user = {}, jwt = '' }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [posts, setPosts] = useState(getPosts());
+    const [posts, setPosts] = useState([]);
+    const [isOp, setIsOp] = useState(false);
 
     const handleEditProfile = () => { setIsEditing(true); };
     const handleCancelEdit = () => { setIsEditing(false); }
@@ -20,12 +21,18 @@ function User({ user = {}, jwt = '' }) {
         setIsEditing(false);
     };
 
-    function getPosts() {
+    useEffect(() => {
         fetchFeed(jwt).then((feed) => {
             const up = feed.filter(post => post.user.username === user.username).map(post => post.imageUrl);
             setPosts(up);
-        })
-    }
+        }).catch((error) => { console.err(error) });
+
+        const localUser = JSON.parse(localStorage.getItem('user'));
+        console.log(localUser);
+
+        if (localUser == null) { setIsOp(false); }
+        else if (localUser.username == user.username) { setIsOp(true); }
+    }, [user, jwt])
 
     return (
         <>
@@ -48,8 +55,8 @@ function User({ user = {}, jwt = '' }) {
                         description={user.description}
                         onEdit={handleEditProfile}
                     />
-                    <EditProfileButton onEdit={handleEditProfile} />
-                    <PhotoGallery photos={posts} />
+                    {isOp && <EditProfileButton onEdit={handleEditProfile} /> }
+                    {posts.length > 0 ? <PhotoGallery photos={posts} /> : <p style={{width: '100%', textAlign: "center", color: '#808080'}}>No posts yet</p>}
                     
                     <BottomHeader/>
                 </div>
