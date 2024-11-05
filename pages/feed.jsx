@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import BottomHeader from '@/components/BottomHeader';
 import TopHeader from '@/components/TopHeader';
-import { fetchFeed, fetchProfileById, likePost } from '@/utils/api';
+import { fetchFeed, fetchProfileById, likePost, removeLike } from '@/utils/api';
 
 function Feed({ endpointPosts = [], jwt = '' }) {
     const [posts, setPosts] = useState(endpointPosts);
@@ -15,9 +15,24 @@ function Feed({ endpointPosts = [], jwt = '' }) {
     const handleLike = (id, userId) => {
         if (!jwt) return;
 
-        // You can only like a post once, but it is not implemented the way to unlike the photo.
         if (!(posts.find(post => post._id == id).likes.includes(userId))) {
             likePost(id, jwt).then((_) => {
+                setPosts(posts.map(post => {
+                    if (post._id == id) {
+                        post.liked = !post.liked;
+                        post.liked ? post.likes.push(post.user._id) : post.likes.pop(post.user._id);
+                    }
+                    return post;
+                }));
+            })
+        } else { handleUnlike(id, userId) }
+    }
+
+    const handleUnlike = (id, userId) => {
+        if (!jwt) return;
+
+        if (posts.find(post => post._id == id).likes.includes(userId)) {
+            removeLike(id, jwt).then((_) => {
                 setPosts(posts.map(post => {
                     if (post._id == id) {
                         post.liked = !post.liked;
