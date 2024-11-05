@@ -23,12 +23,11 @@ function User({ user = {}, jwt = '' }) {
 
     useEffect(() => {
         fetchFeed(jwt).then((feed) => {
-            const up = feed.filter(post => post.user.username === user.username).map(post => post.imageUrl);
+            const up = feed.filter(post => post.user.username === user.username).map(post => { return { imageUrl: post.imageUrl, id: post._id } });
             setPosts(up);
         }).catch((error) => { console.err(error) });
 
         const localUser = JSON.parse(localStorage.getItem('user'));
-        console.log(localUser);
 
         if (localUser == null) { setIsOp(false); }
         else if (localUser.username == user.username) { setIsOp(true); }
