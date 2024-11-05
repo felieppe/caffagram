@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
 import styles from '../styles/TopHeaderProfile.module.css';
+
+import { uploadPost } from '@/utils/api';
+import React, { useState } from 'react';
+import { getCookie } from 'cookies-next';
 
 function CreatePostForm({ onClose }) {
     const [image, setImage] = useState(null);
@@ -15,8 +18,16 @@ function CreatePostForm({ onClose }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Image:', image);
-        console.log('Comment:', comment);
+        if (!image || !comment ) { return alert("Image or caption field is missing!"); }
+
+        const jwt = getCookie('token');
+        const post = { image, caption: comment };
+
+        uploadPost(jwt, post).then((res) => {
+            let postId = res._id;
+            window.location.href = `/post/${postId}`;
+        }).catch((err) => { console.error('Failed to upload post:', err); return alert("Error happened while trying to upload the post!"); })
+
         onClose();
     };
 
