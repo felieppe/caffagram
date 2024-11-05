@@ -1,6 +1,6 @@
 import styles from '../styles/TopHeader.module.css';
 
-import CreatePostForm from './CreatePostForm';
+import CreatePostForm from './modals/CreatePostForm';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';

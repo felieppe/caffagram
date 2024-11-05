@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import styles from '../styles/TopHeaderProfile.module.css';
-import CreatePostForm from './CreatePostForm';
+import CreatePostForm from './modals/CreatePostForm';
 
 function TopHeaderProfile() {
     const [isCreatingPost, setIsCreatingPost] = useState(false);
