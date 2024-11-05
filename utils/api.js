@@ -64,17 +64,20 @@ async function fetchFeed(jwt) {
     } catch (err) { throw err; }
 }
 
-async function commentPost(id, jwt, comment) {
+async function commentPost(id, jwt, commentText) {
     const endpoint = `${BASE_URL}/posts/${id}/comments`;
 
     try {
-        const response = await axios.post(endpoint, comment, { 
+        const response = await axios.post(endpoint, { text: commentText }, { 
             headers: {
-                'Authorization': `Bearer ${jwt}`
+                'Authorization': `Bearer ${jwt}`,
+                'Content-Type': 'application/json'
             }
         });
         return response.data;
-    } catch (err) { throw err; }
+    } catch (err) { 
+        throw err; 
+    }
 }
 
 async function likePost(id, jwt) {
@@ -100,7 +103,7 @@ async function fetchAllProfiles(jwt) {
             }
         });
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
 async function addFriendById(id, jwt) {
@@ -113,20 +116,20 @@ async function addFriendById(id, jwt) {
             }
         });
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
 async function editMyProfile(jwt, data) {
     const endpoint = `${BASE_URL}/profile/edit`;
 
     try {
-        const response = await axios.post(endpoint, {
+        const response = await axios.post(endpoint, data, {
             headers: {
                 'Authorization': `Bearer ${jwt}`
             }
-        }, data);
+        });
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
 async function getCommentById(id, jwt) {
@@ -139,7 +142,7 @@ async function getCommentById(id, jwt) {
             }
         });
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
 async function removeLike(id, jwt) {
@@ -152,7 +155,7 @@ async function removeLike(id, jwt) {
             }
         });
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
 async function removeFriendById(id, jwt) {
@@ -165,7 +168,8 @@ async function removeFriendById(id, jwt) {
             }
         });
         return response.data;
-    } catch (err) { throw err }
+    } catch (err) { throw err; }
 }
 
-export { register, login, fetchProfileById, uploadPost, fetchFeed, commentPost, likePost, fetchAllProfiles, addFriendById, editMyProfile, getCommentById, removeLike, removeFriendById };
+export { register, login, fetchProfileById, uploadPost, fetchFeed, commentPost, likePost, fetchAllProfiles, addFriendById, editMyProfile, getCommentById, removeLike, removeFriendById 
+};
