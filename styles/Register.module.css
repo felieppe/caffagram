@@ -60,3 +60,16 @@
   font-size: 0.9rem;
   margin-bottom: 10px;
 }
+
+.login__text {
+  margin-top: 15px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+}
+
+.login__link {
+  color: #7f82ff;
+  text-decoration: none;
+  margin-left: 5px;
+}

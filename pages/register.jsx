@@ -96,6 +96,10 @@ const Register = () => {
           required
         />
         <button type="submit" className={styles.button}>Registrar</button>
+
+        <p className={styles.login__text}>
+          Create account <a href="/login " className={styles.login__link}>here</a>
+        </p>
       </form>
     </div>
   );
