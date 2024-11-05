@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from '../styles/Login.module.css';
 import { login } from "@/utils/api";
 import { UserContext } from "./_app";
+import Image from 'next/image';
+import Link from 'next/link';
 
 function Login() {
   const [error, setError] = useState('')
@@ -53,11 +55,7 @@ function Login() {
   return (
     <div className={styles.login_container}>
       <div className={styles.logo_container}>
-        <img 
-          src="/logo.svg" 
-          alt="Caffagram Logo" 
-          className={styles.logo}
-        />
+        <Link href={"/"}><Image src="/logo.svg" alt="Caffagram Logo" width={250} height={250} /></Link>
       </div>
       <h1 className={styles.title}>Ingresa en tu cuenta</h1>
       <form className={styles.login_form} onSubmit={handleSubmit}>
@@ -78,7 +76,7 @@ function Login() {
         <button type="submit" className={styles.login_button}>Login</button>
       </form>
       <p className={styles.signup_text}>
-        Create account <a href="/register" className={styles.register_link}>here</a>
+        Create account <Link href="/register" className={styles.register_link}>here</Link>
       </p>
     </div>
   );
