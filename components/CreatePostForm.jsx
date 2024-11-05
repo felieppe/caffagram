@@ -1,4 +1,4 @@
-import styles from '../styles/TopHeaderProfile.module.css';
+import styles from '../styles/modals/CreatePostForm.module.css';
 
 import { uploadPost } from '@/utils/api';
 import React, { useState } from 'react';
