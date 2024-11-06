@@ -7,7 +7,8 @@ import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '../styles/PostView.module.css';
-import { commentPost } from '../utils/api'; 
+import { commentPost } from '../utils/api';
+import Error from 'next/error';
 
 const PostView = () => {
     const profilePicture = '/zarasa.jpg';
@@ -32,8 +33,28 @@ const PostView = () => {
         ]
     };
 
+    const [newComment, setNewComment] = useState('');
+    const [error, setError] = useState('');
+
     const handleLike = (postId, userId) => {
         console.log(`Liked post ${postId} by user ${userId}`);
+    };
+
+    const handleComment = async () => {
+        if (!newComment) {
+            setError('El comentario no puede estar vacío');
+            return;
+        }
+
+        try {
+            const jwt = "tu_token_jwt";
+            await commentPost(post._id, jwt, newComment);
+            setNewComment('');
+            setError('');
+        } catch (error) {
+            console.error("Error al agregar comentario:", error);
+            setError('Error al agregar el comentario. Intenta nuevamente.');
+        }
     };
 
     return (
@@ -108,7 +129,7 @@ const PostView = () => {
                     maxLength="500" 
                 />
                 <button onClick={handleComment}>Comentar</button>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {error && <p style={{ color: 'red' }}>{error}</p>} { Error}
             </div>
             
         </>
