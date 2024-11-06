@@ -1,7 +1,23 @@
+/**
+ * @file api.js
+ * @description API functions
+ * @name API Functions
+ * @package utils
+ */
+
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:3001/api';
 
+/**
+ * @function register
+ * @description Register a new user
+ * @param {object} data 
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * register({email: 'test@example.com', password: 'password', username: 'test'}).then((res) => { console.log(res) });
+ */
 async function register(data) {
     const endpoint = `${BASE_URL}/auth/register`;
 
@@ -11,6 +27,15 @@ async function register(data) {
     } catch (err) { throw err; }
 }
 
+/**
+ * @function login
+ * @description Login a user
+ * @param {object} data
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * login({email: 'test@example.com', password: 'password'}).then((res) => { console.log(res) });
+ */
 async function login(data) {
     const endpoint = `${BASE_URL}/auth/login`;
 
@@ -20,6 +45,16 @@ async function login(data) {
     } catch (err) { throw err; }
 }
 
+/**
+ * @function fetchProfileById
+ * @description Fetch a user profile by ID
+ * @param {string} id
+ * @param {string} jwt
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * fetchProfileById('USER_ID', 'JWT_TOKEN').then((res) => { console.log(res) });
+ */
 async function fetchProfileById(id, jwt) {
     const endpoint = `${BASE_URL}/user/profile/${id}`;
 
@@ -33,6 +68,16 @@ async function fetchProfileById(id, jwt) {
     } catch (err) { throw err; }
 }
 
+/**
+ * @function uploadPost
+ * @description Upload a new post
+ * @param {string} jwt
+ * @param {object} post
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * uploadPost('JWT_TOKEN', { image: 'IMAGE_FILE', caption: 'CAPTION' }).then((res) => { console.log(res) });
+ */
 async function uploadPost(jwt, post) {
     const endpoint = `${BASE_URL}/posts/upload`;
     const formData = new FormData();
@@ -51,6 +96,15 @@ async function uploadPost(jwt, post) {
     } catch (err) { throw err; }
 }
 
+/**
+ * @function fetchFeed
+ * @description Fetch the feed
+ * @param {string} jwt
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * fetchFeed('JWT_TOKEN').then((res) => { console.log(res) });
+ */
 async function fetchFeed(jwt) {
     const endpoint = `${BASE_URL}/posts/feed`;
 
@@ -64,6 +118,17 @@ async function fetchFeed(jwt) {
     } catch (err) { throw err; }
 }
 
+/**
+ * @function commentPost
+ * @description Comment a post
+ * @param {string} id
+ * @param {string} jwt
+ * @param {object} comment
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * commentPost('POST_ID', 'JWT_TOKEN', { content: 'COMMENT' }).then((res) => { console.log(res) });
+ */
 async function commentPost(id, jwt, comment) {
     const endpoint = `${BASE_URL}/posts/${id}/comments`;
 
@@ -77,6 +142,16 @@ async function commentPost(id, jwt, comment) {
     } catch (err) { throw err; }
 }
 
+/**
+ * @function likePost
+ * @description Like a post by ID
+ * @param {string} id
+ * @param {string} jwt
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * likePost('POST_ID', 'JWT_TOKEN').then((res) => { console.log(res) });
+ */
 async function likePost(id, jwt) {
     const endpoint = `${BASE_URL}/posts/${id}/like`;
 
@@ -90,6 +165,15 @@ async function likePost(id, jwt) {
     } catch (err) { throw err; }
 }
 
+/**
+ * @function fetchAllProfiles
+ * @description Fetch all profiles
+ * @param {string} jwt
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * fetchAllProfiles('JWT_TOKEN').then((res) => { console.log(res) });
+ */
 async function fetchAllProfiles(jwt) {
     const endpoint = `${BASE_URL}/user/all`;
 
@@ -103,6 +187,16 @@ async function fetchAllProfiles(jwt) {
     } catch (err) { throw err }
 }
 
+/**
+ * @function addFriendById
+ * @description Add a friend by ID
+ * @param {string} id
+ * @param {string} jwt
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * addFriendById('USER_ID', 'JWT_TOKEN').then((res) => { console.log(res) });
+ */
 async function addFriendById(id, jwt) {
     const endpoint = `${BASE_URL}/user/add-friend/${id}`;
 
@@ -116,6 +210,16 @@ async function addFriendById(id, jwt) {
     } catch (err) { throw err }
 }
 
+/**
+ * @function editMyProfile
+ * @description Edit the current user's profile
+ * @param {string} jwt
+ * @param {object} data
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * editMyProfile('JWT_TOKEN', {username: 'NEW_USERNAME', description: 'NEW_DESCRIPTION', profilePicture: 'NEW_PROFILE_PICTURE'}).then((res) => { console.log(res) });
+ */
 async function editMyProfile(jwt, data) {
     const endpoint = `${BASE_URL}/profile/edit`;
 
@@ -129,6 +233,16 @@ async function editMyProfile(jwt, data) {
     } catch (err) { throw err }
 }
 
+/**
+ * @function getCommentById
+ * @description Get a comment by ID
+ * @param {string} id
+ * @param {string} jwt
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * getCommentById('COMMENT_ID', 'JWT_TOKEN').then((res) => { console.log(res) });
+ */
 async function getCommentById(id, jwt) {
     const endpoint = `${BASE_URL}/posts/comments/${id}`;
 
@@ -142,6 +256,16 @@ async function getCommentById(id, jwt) {
     } catch (err) { throw err }
 }
 
+/**
+ * @function removeLike
+ * @description Remove a like by ID
+ * @param {string} id
+ * @param {string} jwt
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * removeLike('POST_ID', 'JWT_TOKEN').then((res) => { console.log(res) });
+ */
 async function removeLike(id, jwt) {
     const endpoint = `${BASE_URL}/posts/${id}/like`;
 
@@ -155,6 +279,16 @@ async function removeLike(id, jwt) {
     } catch (err) { throw err }
 }
 
+/**
+ * @function removeFriendById
+ * @description Remove a friend by ID
+ * @param {string} id
+ * @param {string} jwt
+ * @returns {Promise<object>}
+ * @throws {Error}
+ * @example
+ * removeFriendById('USER_ID', 'JWT_TOKEN').then((res) => { console.log(res) });
+ */
 async function removeFriendById(id, jwt) {
     const endpoint = `${BASE_URL}/user/remove-friend/${id}`;
 
