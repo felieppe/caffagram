@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addFriendById } from '../utils/api';
+import { addFriendById} from '../utils/api';
 import styles from '../styles/AddFriend.module.css';
 
 
