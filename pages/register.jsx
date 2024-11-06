@@ -1,7 +1,8 @@
 import styles from '../styles/Register.module.css';
 
 import { register } from '@/utils/api';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from "./_app";
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -11,6 +12,7 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const { setUser } = useContext(UserContext);
 
   const validateForm = () => {
     if (!email || !password || !username) {
@@ -43,7 +45,8 @@ const Register = () => {
 
     register(data).then((res) => {
       let {_id, token } = res
-      document.cookie = `token=${token}; max-age=3600; path=/`;
+      document.cookie = `token=${token}; max-age=2592000; path=/; secure; HttpOnly`;
+      setUser({ id: _id, token });
 
       window.location.href = '/feed';
     }).catch((err) => {

@@ -38,12 +38,11 @@ function Login() {
       } else {
         let {_id, username, token } = res
         
-        document.cookie = `token=${token}; max-age=3600; path=/`;
+        document.cookie = `token=${token}; max-age=2592000; path=/; secure; HttpOnly`;
         setUser({ id: _id, username, token });
 
         window.location.href = '/feed';
-      }}).catch((error) => {
-    })
+      }}).catch((error) => {console.error(error)})
   }
   
   useEffect(() => {
