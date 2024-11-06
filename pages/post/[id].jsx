@@ -15,8 +15,6 @@ function PostView({ post }) {
         console.log(`Liked post ${postId} by user ${userId}`);
     };
 
-    console.log(post)
-
     return (
         <>
             <TopHeader username={post.user.username} profilePicture={post.user.profilePicture} />
@@ -43,7 +41,7 @@ function PostView({ post }) {
 
                 <div className={styles.post__image}>
                     <Image 
-                        src={post.imageUrl} 
+                        src={"http://localhost:3001/" + post.imageUrl} 
                         alt="Post" 
                         width={400} 
                         height={400} 
