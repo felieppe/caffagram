@@ -2,15 +2,17 @@ import styles from '../styles/Feed.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faHeart as faFilledHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faEmptyHeart, faComment } from '@fortawesome/free-regular-svg-icons'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import BottomHeader from '@/components/BottomHeader';
 import TopHeader from '@/components/TopHeader';
 import { fetchFeed, fetchProfileById, likePost, removeLike } from '@/utils/api';
+import { UserContext } from './_app';
 
 function Feed({ endpointPosts = [], jwt = '' }) {
     const [posts, setPosts] = useState(endpointPosts);
+    const { user } = useContext(UserContext);
 
     const handleLike = (id, userId) => {
         if (!jwt) return;
@@ -73,7 +75,7 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                             </div>
 
                             <div className={styles.post__actions}>
-                                <FontAwesomeIcon icon={post.likes.includes(post.user._id) ? faFilledHeart : faEmptyHeart} className={post.liked ? styles.post__liked : null} onClick={ () => { handleLike(post._id, post.user._id) } }/>
+                                <FontAwesomeIcon icon={post.likes.includes(post.user._id) ? faFilledHeart : faEmptyHeart} className={post.likes.includes(user.id) ? styles.post__liked : null} onClick={ () => { handleLike(post._id, post.user._id) } }/>
                                 <FontAwesomeIcon icon={faComment} />
                             </div>
 
