@@ -14,17 +14,19 @@ function Feed({ endpointPosts = [], jwt = '' }) {
 
     const handleLike = (id, userId) => {
         if (!jwt) return;
-
+    
         if (!(posts.find(post => post._id == id).likes.includes(userId))) {
             likePost(id, jwt).then((_) => {
                 setPosts(posts.map(post => {
                     if (post._id == id) {
-                        post.liked = !post.liked;
-                        post.liked ? post.likes.push(post.user._id) : post.likes.pop(post.user._id);
+                        post.liked = true;
+                        post.likes.push(userId);
                     }
                     return post;
                 }));
-            })
+            }).catch(error => {
+                console.error("Error liking the post:", error);
+            });
         } else { handleUnlike(id, userId) }
     }
 
@@ -35,12 +37,14 @@ function Feed({ endpointPosts = [], jwt = '' }) {
             removeLike(id, jwt).then((_) => {
                 setPosts(posts.map(post => {
                     if (post._id == id) {
-                        post.liked = !post.liked;
-                        post.liked ? post.likes.push(post.user._id) : post.likes.pop(post.user._id);
+                        post.liked = false;
+                        post.likes = post.likes.filter(likeId => likeId !== userId);
                     }
                     return post;
                 }));
-            })
+            }).catch(error => {
+                console.error("Error unliking the post:", error);
+            });
         }
     }
 
@@ -55,8 +59,6 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                             <div className={styles.post__top}>
                                 <div className={styles.post__top__user}>
                                     <Link href={`/${post.user.username}`}>
-                                        {/* I suppose this wont work. Backend does not server images URL well, just gives source path. */}
-                                        {/* It is not performance-friendly to fetch twice the profile just for getting the profile picture URL. */}
                                         <Image className={styles.post__top__user__img} src={fetchProfileById(post.user._id, jwt).profilePicture ? fetchProfileById(post.user._id, jwt).profilePicture : "/default-profile.webp"} alt="User" width={30} height={30} />
                                     </Link>
                                     <p>@{post.user.username}</p>
@@ -68,7 +70,6 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                             </div>
 
                             <div className={styles.post__image}>
-                                {/* Backend should server URL with image's source too. Impossible to import dynamically every image SRC from require(). */}
                                 <Image src={""} alt="Post" width={350} height={300} />
                             </div>
 
@@ -95,7 +96,6 @@ function Feed({ endpointPosts = [], jwt = '' }) {
             </div>
 
             <BottomHeader profileImageUrl = {""}/>
-            {/* <BottomHeader profileImageUrl={fetchProfile(jwt).profilePicture || ""}/> */}
         </>
     )
 }
