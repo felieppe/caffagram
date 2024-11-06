@@ -110,13 +110,15 @@ async function addFriendById(id, jwt) {
     const endpoint = `${BASE_URL}/user/add-friend/${id}`;
 
     try {
-        const response = await axios.post(endpoint, {
+        const response = await axios.post(endpoint, {}, { 
             headers: {
                 'Authorization': `Bearer ${jwt}`
             }
         });
         return response.data;
-    } catch (err) { throw err; }
+    } catch (err) { 
+        throw err; 
+    }
 }
 
 async function editMyProfile(jwt, data) {
@@ -171,5 +173,6 @@ async function removeFriendById(id, jwt) {
     } catch (err) { throw err; }
 }
 
-export { register, login, fetchProfileById, uploadPost, fetchFeed, commentPost, likePost, fetchAllProfiles, addFriendById, editMyProfile, getCommentById, removeLike, removeFriendById 
+export { 
+    register,login,fetchProfileById,uploadPost,fetchFeed, commentPost,likePost,fetchAllProfiles,addFriendById,editMyProfile,getCommentById,removeLike,removeFriendById 
 };
