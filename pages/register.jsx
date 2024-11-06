@@ -2,6 +2,8 @@ import styles from '../styles/Register.module.css';
 
 import { register } from '@/utils/api';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -58,11 +60,7 @@ const Register = () => {
   return (
     <div className={styles.container}>
       <div className={styles.logo_container}>
-        <img 
-          src="/logo.svg" 
-          alt="Caffagram Logo" 
-          className={styles.logo}
-        />
+        <Link href={"/"}><Image src="/logo.svg" alt="Caffagram Logo" width={250} height={250} /></Link>
       </div>
       <h2 className={styles.title}>Crear una Cuenta</h2>
       {error && <p className={styles.error}>{error}</p>}
@@ -98,7 +96,7 @@ const Register = () => {
         <button type="submit" className={styles.button}>Registrar</button>
 
         <p className={styles.login__text}>
-          Create account <a href="/login " className={styles.login__link}>here</a>
+          Create account <Link href="/login" className={styles.login__link}>here</Link>
         </p>
       </form>
     </div>
