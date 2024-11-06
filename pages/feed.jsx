@@ -98,8 +98,7 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                 </div>
             </div>
 
-            <BottomHeader profileImageUrl = {""}/>
-            {/* <BottomHeader profileImageUrl={fetchProfile(jwt).profilePicture || ""}/> */}
+            <BottomHeader profileImageUrl={fetchProfileById(user.id, jwt).profilePicture || ""}/>
         </>
     )
 }

@@ -94,7 +94,7 @@ function PostView({ endpointPost = {}, jwt = '' }) {
             </div>
           </div>
 
-          <BottomHeader profileImageUrl={post.user.profilePicture} />
+          <BottomHeader profileImageUrl={fetchProfileById(user.id, jwt).profilePicture || ""}/>
         </>
     );
 };
