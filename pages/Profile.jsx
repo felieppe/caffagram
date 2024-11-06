@@ -5,9 +5,9 @@ import BottomHeader from "../components/BottomHeader";
 import PhotoGallery from "../components/PhotoGallery";
 import TopHeaderProfile from "@/components/TopHeaderProfile";
 import EditProfilePage from "../components/EditProfilePage";
+import AddFriend from "../components/AddFriend"; 
 
 function Profile() {
-    
     const [isEditing, setIsEditing] = useState(false);
     const [profile, setProfile] = useState({
         username: "UnUsername",
@@ -29,26 +29,14 @@ function Profile() {
 
     const handleCancelEdit = () => {
         setIsEditing(false);
-    }
-
-
-
-
-    // const handleInputChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setProfile((prevProfile) => ({
-    //         ...prevProfile,
-    //         [name]: value
-    //     }));
-    // };
-    
+    };
 
     const photos = [
         "https://upload.wikimedia.org/wikipedia/en/d/dc/MichaelScott.png",
         "https://upload.wikimedia.org/wikipedia/en/d/dc/MichaelScott.png",
         "https://upload.wikimedia.org/wikipedia/en/d/dc/MichaelScott.png"
-       
     ];
+
     return (
         <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto", fontFamily: "Arial, sans-serif" }}>
             {isEditing ? (
@@ -59,7 +47,7 @@ function Profile() {
                 />
             ) : (
                 <div>
-                    <TopHeaderProfile/>
+                    <TopHeaderProfile />
                     <ProfileHeader
                         username={profile.username}
                         profilePicture={profile.profilePicture}
@@ -68,9 +56,13 @@ function Profile() {
                         description={profile.description}
                         onEdit={handleEditProfile}
                     />
-                    <EditProfileButton onEdit={handleEditProfile} />
+                    
+                    {AddFriend}
+                    <AddFriend />
+                    
+                    <EditProfileButton onEdit={handleEditProfile} /> {EditProfileButton }
                     <PhotoGallery photos={photos} />
-                    <BottomHeader/>
+                    <BottomHeader />
                 </div>
             )}
         </div>
