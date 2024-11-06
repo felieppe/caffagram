@@ -22,7 +22,7 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                 setPosts(posts.map(post => {
                     if (post._id == id) {
                         post.liked = !post.liked;
-                        post.liked ? post.likes.push(post.user._id) : post.likes.pop(post.user._id);
+                        post.liked ? post.likes.push(user.id) : post.likes.pop(user.id);
                     }
                     return post;
                 }));
