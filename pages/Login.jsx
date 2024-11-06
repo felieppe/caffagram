@@ -38,9 +38,10 @@ function Login() {
       } else {
         let {_id, username, token } = res
         
-        document.cookie = `token=${token}; max-age=2592000; path=/; secure; HttpOnly`;
-        setUser({ id: _id, username, token });
+        const cookieOptions = { maxAge: 2592000, path: '/', secure: process.env.NODE_ENV === 'production', httpOnly: true }
+        document.cookie = `token=${token}; ${Object.keys(cookieOptions).map(key => `${key}=${cookieOptions[key]}`).join('; ')}`;
 
+        setUser({ id: _id, username, token }); 
         window.location.href = '/feed';
       }}).catch((error) => {console.error(error)})
   }
