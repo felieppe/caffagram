@@ -2,6 +2,7 @@ import styles from '../styles/Register.module.css';
 
 import { register } from '@/utils/api';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 
 const Register = () => {
@@ -59,13 +60,7 @@ const Register = () => {
   return (
     <div className={styles.container}>
       <div className={styles.logo_container}>
-        <Image 
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRNYYPTbBU17CbvR5JIjgU7TVqu0T6ry7A9g&s" 
-          alt="UCU logo" 
-          className={styles.logo}
-          width={100}
-          height={100}
-        />
+        <Link href={"/"}><Image src="/logo.svg" alt="Caffagram Logo" width={250} height={250} /></Link>
       </div>
       <h2 className={styles.title}>Crear una Cuenta</h2>
       {error && <p className={styles.error}>{error}</p>}
@@ -99,6 +94,10 @@ const Register = () => {
           required
         />
         <button type="submit" className={styles.button}>Registrar</button>
+
+        <p className={styles.login__text}>
+          Create account <Link href="/login" className={styles.login__link}>here</Link>
+        </p>
       </form>
     </div>
   );

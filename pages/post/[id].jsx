@@ -1,3 +1,5 @@
+import styles from '@/styles/PostView.module.css';  
+
 import React from 'react';
 import TopHeader from '@/components/TopHeader';
 import BottomHeader from '@/components/BottomHeader';
@@ -6,34 +8,14 @@ import { faEllipsis, faHeart as faFilledHeart, faComment } from '@fortawesome/fr
 import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons';
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from '../styles/PostView.module.css';
+import { fetchFeed } from '@/utils/api';
 
-const PostView = () => {
-    const profilePicture = '/zarasa.jpg';
-    const post = {
-        user: {
-            username: 'Zarasa del Sabor',
-            profilePicture: '/zarasa.jpg',
-        },
-        imageUrl: '/zarasa.jpg',
-        likes: ['1', '1'],
-        comments: [
-            {
-                _id: '1',
-                user: { username: 'Luciano' },
-                text: 'Tremenda foto!'
-            },
-            {
-                _id: '2',
-                user: { username: 'Alfredo' },
-                text: 'Tremenda pilcha Loco!'
-            }
-        ]
-    };
-
+function PostView({ post }) {
     const handleLike = (postId, userId) => {
         console.log(`Liked post ${postId} by user ${userId}`);
     };
+
+    console.log(post)
 
     return (
         <>
@@ -98,14 +80,22 @@ const PostView = () => {
             </div>
           </div>
 
-            <BottomHeader profileImageUrl={profilePicture} />
+            <BottomHeader profileImageUrl={post.user.profilePicture} />
         </>
     );
 };
 
 export default PostView;
-/*
-import TopHeader from '@/components/TopHeader';
-import BottomHeader from '@/components/BottomHeader';
-import styles from '../styles/PostView.module.css';
-*/
+
+export async function getServerSideProps(context) {
+    const { id } = context.query
+    if (id == null) { return { redirect: { destination: '/feed', permanent: false }} }
+
+    const jwt = context.req.cookies.token;
+    if (jwt == null) { return { redirect: { destination: '/Login', permanent: false }} }
+
+    const post = await fetchFeed(jwt).then((posts) => { return posts.find(post => post._id === id) });
+    if (post == undefined) { return { redirect: { destination: '/feed', permanent: false }} }
+
+    return { props: { post: (post != undefined ? post : {}) } };
+}
