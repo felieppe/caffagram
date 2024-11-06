@@ -23,7 +23,7 @@ function User({ user = {}, jwt = '' }) {
 
     useEffect(() => {
         fetchFeed(jwt).then((feed) => {
-            const up = feed.filter(post => post.user.username === user.username).map(post => { return { imageUrl: post.imageUrl, id: post._id } });
+            const up = feed.filter(post => post.user.username === user.username).map(post => { return { imageUrl: "http://localhost:3001/" + post.imageUrl, id: post._id } });
             setPosts(up);
         }).catch((error) => { console.err(error) });
 

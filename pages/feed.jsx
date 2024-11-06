@@ -69,7 +69,7 @@ function Feed({ endpointPosts = [], jwt = '' }) {
 
                             <div className={styles.post__image}>
                                 {/* Backend should server URL with image's source too. Impossible to import dynamically every image SRC from require(). */}
-                                <Image src={""} alt="Post" width={350} height={300} />
+                                <Image src={"http://localhost:3001/" + post.imageUrl} alt="Post" width={350} height={300} />
                             </div>
 
                             <div className={styles.post__actions}>
