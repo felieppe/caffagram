@@ -14,10 +14,10 @@ function Feed({ endpointPosts = [], jwt = '' }) {
     const [posts, setPosts] = useState(endpointPosts);
     const { user } = useContext(UserContext);
 
-    const handleLike = (id, userId) => {
+    const handleLike = (id) => {
         if (!jwt) return;
 
-        if (!(posts.find(post => post._id == id).likes.includes(userId))) {
+        if (!(posts.find(post => post._id == id).likes.includes(user.id))) {
             likePost(id, jwt).then((_) => {
                 setPosts(posts.map(post => {
                     if (post._id == id) {
@@ -27,24 +27,26 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                     return post;
                 }));
             })
-        } else { handleUnlike(id, userId) }
+        } else { handleUnlike(id) }
     }
 
-    const handleUnlike = (id, userId) => {
+    const handleUnlike = (id) => {
         if (!jwt) return;
 
-        if (posts.find(post => post._id == id).likes.includes(userId)) {
+        if (posts.find(post => post._id == id).likes.includes(user.id)) {
             removeLike(id, jwt).then((_) => {
                 setPosts(posts.map(post => {
                     if (post._id == id) {
                         post.liked = !post.liked;
-                        post.likes.pop(userId);
+                        post.likes.pop(user.id);
                     }
                     return post;
                 }));
             })
         }
     }
+
+    if (!user) { return <div>Loading...</div>; }
 
     return (
         <>
@@ -75,7 +77,7 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                             </div>
 
                             <div className={styles.post__actions}>
-                                <FontAwesomeIcon icon={post.likes.includes(post.user._id) ? faFilledHeart : faEmptyHeart} className={post.likes.includes(user.id) ? styles.post__liked : null} onClick={ () => { handleLike(post._id, post.user._id) } }/>
+                                <FontAwesomeIcon icon={post.likes.includes(post.user._id) ? faFilledHeart : faEmptyHeart} className={post.likes.includes(user.id) ? styles.post__liked : null} onClick={ () => { handleLike(post._id) } }/>
                                 <FontAwesomeIcon icon={faComment} />
                             </div>
 
