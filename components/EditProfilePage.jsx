@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from '../styles/EditProfilePage.module.css'; // Importar correctamente el módulo CSS
+import styles from '../styles/EditProfilePage.module.css'; 
 
 function EditProfilePage({ profileData, onSave, onCancel }) {
     const [profile, setProfile] = useState(profileData);
@@ -11,6 +11,20 @@ function EditProfilePage({ profileData, onSave, onCancel }) {
             [name]: value
         }));
     };
+
+    const handleFileChange = (e) =>{
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setProfile((prevProfile) => ({
+                    ...prevProfile,
+                    profilePicture: reader.result
+                }));
+            };
+            reader.readAsDataURL(file);
+        }
+    }
 
     const handleSave = () => {
         onSave(profile);
@@ -32,12 +46,11 @@ function EditProfilePage({ profileData, onSave, onCancel }) {
                         />
                     </div>
                     <div className={styles.formGroup}>
-                        <label className={styles.label}>Profile Picture URL:</label>
+                        <label className={styles.label}>Profile Picture:</label>
                         <input
-                            type="text"
+                            type="file"
                             name="profilePicture"
-                            value={profile.profilePicture}
-                            onChange={handleInputChange}
+                            onChange={handleFileChange}
                             className={styles.input}
                         />
                     </div>
