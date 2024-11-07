@@ -8,7 +8,7 @@ import { faEllipsis, faHeart as faFilledHeart, faComment } from '@fortawesome/fr
 import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons';
 import Image from 'next/image';
 import Link from 'next/link';
-import { fetchFeed, likePost, removeLike } from '@/utils/api';
+import { fetchFeed, likePost, removeLike, fetchProfileById } from '@/utils/api';
 import { UserContext } from '../_app';
 
 function PostView({ endpointPost = {}, jwt = '' }) {
@@ -75,6 +75,11 @@ function PostView({ endpointPost = {}, jwt = '' }) {
 
                 <div className={styles.post__likes}>
                     {post.likes.length} Likes
+                </div>
+
+                <div className={styles.post__description}>
+                    <b>{post.user.username}</b>
+                    <p>{post.caption}</p>
                 </div>
 
                 <div className={styles.post__comments}>
