@@ -38,7 +38,7 @@ function Login() {
       } else {
         let {_id, username, token } = res
         
-        const cookieOptions = { maxAge: 2592000, path: '/', secure: process.env.NODE_ENV === 'production', httpOnly: true }
+        const cookieOptions = { maxAge: 2592000, path: '/', secure: process.env.NODE_ENV === 'production' }
         document.cookie = `token=${token}; ${Object.keys(cookieOptions).map(key => `${key}=${cookieOptions[key]}`).join('; ')}`;
 
         setUser({ id: _id, username, token }); 
