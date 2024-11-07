@@ -17,8 +17,9 @@ function EditProfilePage({ profileData, onSave, onCancel }) {
     };
 
     return (
-        <div className={styles.editProfileContainer}>
-            <div className={styles.editProfileForm}>
+        <div className={styles.modal}>
+            <div className={styles.modalContent}>
+                <span className={styles.close} onClick={onCancel}>&times;</span>
                 <h2 className={styles.h2}>Edit Profile</h2>
                 <form>
                     <div className={styles.formGroup}>
