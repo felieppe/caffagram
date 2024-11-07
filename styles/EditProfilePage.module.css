@@ -62,3 +62,40 @@
 .button:hover {
     background-color: #0056b3;
 }
+
+@media (max-width: 768px) {
+    .edit-profile-form {
+        padding: 15px;
+        max-width: 90%;
+    }
+
+    .button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .button {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .edit-profile-form {
+        padding: 10px;
+    }
+
+    .input, .textarea {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
