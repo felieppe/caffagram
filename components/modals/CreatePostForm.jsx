@@ -21,9 +21,8 @@ function CreatePostForm({ onClose }) {
         if (!image || !comment ) { return alert("Image or caption field is missing!"); }
 
         const jwt = getCookie('token');
-        const post = { image, caption: comment };
 
-        uploadPost(jwt, post).then((res) => {
+        uploadPost(jwt, image, comment).then((res) => {
             let postId = res._id;
             window.location.href = `/post/${postId}`;
         }).catch((err) => { console.error('Failed to upload post:', err); return alert("Error happened while trying to upload the post!"); })
