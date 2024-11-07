@@ -2,47 +2,51 @@ import styles from '../styles/Feed.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faHeart as faFilledHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faEmptyHeart, faComment } from '@fortawesome/free-regular-svg-icons'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import BottomHeader from '@/components/BottomHeader';
 import TopHeader from '@/components/TopHeader';
 import { fetchFeed, fetchProfileById, likePost, removeLike } from '@/utils/api';
+import { UserContext } from './_app';
 
 function Feed({ endpointPosts = [], jwt = '' }) {
     const [posts, setPosts] = useState(endpointPosts);
+    const { user } = useContext(UserContext);
 
-    const handleLike = (id, userId) => {
+    const handleLike = (id) => {
         if (!jwt) return;
 
-        if (!(posts.find(post => post._id == id).likes.includes(userId))) {
+        if (!(posts.find(post => post._id == id).likes.includes(user.id))) {
             likePost(id, jwt).then((_) => {
                 setPosts(posts.map(post => {
                     if (post._id == id) {
                         post.liked = !post.liked;
-                        post.liked ? post.likes.push(post.user._id) : post.likes.pop(post.user._id);
+                        post.liked ? post.likes.push(user.id) : post.likes.pop(user.id);
                     }
                     return post;
                 }));
             })
-        } else { handleUnlike(id, userId) }
+        } else { handleUnlike(id) }
     }
 
-    const handleUnlike = (id, userId) => {
+    const handleUnlike = (id) => {
         if (!jwt) return;
 
-        if (posts.find(post => post._id == id).likes.includes(userId)) {
+        if (posts.find(post => post._id == id).likes.includes(user.id)) {
             removeLike(id, jwt).then((_) => {
                 setPosts(posts.map(post => {
                     if (post._id == id) {
                         post.liked = !post.liked;
-                        post.liked ? post.likes.push(post.user._id) : post.likes.pop(post.user._id);
+                        post.likes.pop(user.id);
                     }
                     return post;
                 }));
             })
         }
     }
+
+    if (!user) { return <div>Loading...</div>; }
 
     return (
         <>
@@ -73,7 +77,7 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                             </div>
 
                             <div className={styles.post__actions}>
-                                <FontAwesomeIcon icon={post.likes.includes(post.user._id) ? faFilledHeart : faEmptyHeart} className={post.liked ? styles.post__liked : null} onClick={ () => { handleLike(post._id, post.user._id) } }/>
+                                <FontAwesomeIcon icon={post.likes.includes(post.user._id) ? faFilledHeart : faEmptyHeart} className={post.likes.includes(user.id) ? styles.post__liked : null} onClick={ () => { handleLike(post._id) } }/>
                                 <FontAwesomeIcon icon={faComment} />
                             </div>
 
@@ -94,8 +98,7 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                 </div>
             </div>
 
-            <BottomHeader profileImageUrl = {""}/>
-            {/* <BottomHeader profileImageUrl={fetchProfile(jwt).profilePicture || ""}/> */}
+            <BottomHeader profileImageUrl={fetchProfileById(user.id, jwt).profilePicture || ""}/>
         </>
     )
 }

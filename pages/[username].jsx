@@ -1,4 +1,4 @@
-import { fetchAllProfiles, fetchFeed } from "@/utils/api";
+import { fetchAllProfiles, fetchFeed, fetchProfileById } from "@/utils/api";
 
 import ProfileHeader from "../components/ProfileHeader";
 import EditProfileButton from "../components/EditProfileButton";
@@ -12,6 +12,7 @@ function User({ user = {}, jwt = '' }) {
     const [isEditing, setIsEditing] = useState(false);
     const [posts, setPosts] = useState([]);
     const [isOp, setIsOp] = useState(false);
+    const [lUser, setLUser] = useState(null);
 
     const handleEditProfile = () => { setIsEditing(true); };
     const handleCancelEdit = () => { setIsEditing(false); }
@@ -28,10 +29,13 @@ function User({ user = {}, jwt = '' }) {
         }).catch((error) => { console.err(error) });
 
         const localUser = JSON.parse(localStorage.getItem('user'));
+        setLUser(localUser);
 
         if (localUser == null) { setIsOp(false); }
         else if (localUser.username == user.username) { setIsOp(true); }
     }, [user, jwt])
+
+    if (!lUser) { return <div>Loading...</div> }
 
     return (
         <>
@@ -57,7 +61,7 @@ function User({ user = {}, jwt = '' }) {
                     {isOp && <EditProfileButton onEdit={handleEditProfile} /> }
                     {posts.length > 0 ? <PhotoGallery photos={posts} /> : <p style={{width: '100%', textAlign: "center", color: '#808080'}}>No posts yet</p>}
                     
-                    <BottomHeader/>
+                    <BottomHeader profileImageUrl={fetchProfileById(lUser.id, jwt).profilePicture || ""}/>
                 </div>
             )}
         </div>
