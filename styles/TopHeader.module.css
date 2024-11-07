@@ -22,3 +22,33 @@
 .likeButton{
     color: red;
 }
+
+@media (max-width: 360px) {
+    .top_header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+
+    .top_header img {
+        width: 100px;
+    }
+
+    .likeButton, .createPost {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .top_header {
+        padding: 0.5rem;
+    }
+
+    .top_header img {
+        width: 80px;
+    }
+
+    .likeButton, .createPost {
+        font-size: 16px;
+    }
+}
