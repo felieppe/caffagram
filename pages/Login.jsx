@@ -30,8 +30,10 @@ function Login() {
     if (!validateForm(e)) return alert(error);
     e.preventDefault();
 
-    let data = {email: e.target.email.value, password: e.target.password.value}
-    login(data).then((res) => {
+    let email = e.target.email.value;
+    let password = e.target.password.value;
+
+    login(email, password).then((res) => {
       if (res.error) {
         setError(res.error);
         return alert(error)
