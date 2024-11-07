@@ -90,3 +90,46 @@
     margin-top: 15px;
 }
 
+@media (max-width: 400px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-picture-container {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .profile-info {
+        text-align: center;
+    }
+
+    .profile-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .stat-item {
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-username {
+        font-size: 24px;
+    }
+
+    .profile-description {
+        font-size: 14px;
+    }
+
+    .stat-item strong {
+        font-size: 18px;
+    }
+
+    .stat-item span {
+        font-size: 12px;
+    }
+}

@@ -14,3 +14,28 @@
     align-items: center;
     gap: 10px;
 }
+
+@media (max-width: 400px) {
+    .top_header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .top_header img {
+        width: 100px;
+    }
+
+    .icons {
+        gap: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .top_header img {
+        width: 80px;
+    }
+
+    .icons {
+        gap: 2px;
+    }
+}
