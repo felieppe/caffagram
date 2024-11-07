@@ -30,15 +30,17 @@ function Login() {
     if (!validateForm(e)) return alert(error);
     e.preventDefault();
 
-    let data = {email: e.target.email.value, password: e.target.password.value}
-    login(data).then((res) => {
+    let email = e.target.email.value;
+    let password = e.target.password.value;
+
+    login(email, password).then((res) => {
       if (res.error) {
         setError(res.error);
         return alert(error)
       } else {
         let {_id, username, token } = res
         
-        const cookieOptions = { maxAge: 2592000, path: '/', secure: process.env.NODE_ENV === 'production', httpOnly: true }
+        const cookieOptions = { maxAge: 2592000, path: '/', secure: process.env.NODE_ENV === 'production' }
         document.cookie = `token=${token}; ${Object.keys(cookieOptions).map(key => `${key}=${cookieOptions[key]}`).join('; ')}`;
 
         setUser({ id: _id, username, token }); 

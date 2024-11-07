@@ -40,16 +40,15 @@ function User({ user = {}, jwt = '' }) {
     return (
         <>
             <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto", fontFamily: "Arial, sans-serif" }}>
-            {isEditing ? (
-                <EditProfilePage 
+                {isEditing ? <EditProfilePage 
                     profileData={user} 
                     onSave={handleSaveProfile} 
                     onCancel={handleCancelEdit} 
-                />
-            ) : (
+                /> : null}
+                
                 <div>
                     <TopHeaderProfile/>
-                    
+                        
                     <ProfileHeader
                         username={user.username}
                         profilePicture={user.profilePicture ? user.profilePicture : "/default-profile.webp"}
@@ -58,13 +57,13 @@ function User({ user = {}, jwt = '' }) {
                         description={user.description}
                         onEdit={handleEditProfile}
                     />
+                    
                     {isOp && <EditProfileButton onEdit={handleEditProfile} /> }
                     {posts.length > 0 ? <PhotoGallery photos={posts} /> : <p style={{width: '100%', textAlign: "center", color: '#808080'}}>No posts yet</p>}
-                    
+                        
                     <BottomHeader profileImageUrl={fetchProfileById(lUser.id, jwt).profilePicture || ""}/>
                 </div>
-            )}
-        </div>
+            </div>
         </>
     )
 }

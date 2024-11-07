@@ -16,13 +16,13 @@ const BASE_URL = 'http://localhost:3001/api';
  * @returns {Promise<object>}
  * @throws {Error}
  * @example
- * register({email: 'test@example.com', password: 'password', username: 'test'}).then((res) => { console.log(res) });
+ * register("test@example.com", "password", "username").then((res) => { console.log(res) });
  */
-async function register(data) {
+async function register(email, password, username) {
     const endpoint = `${BASE_URL}/auth/register`;
 
     try {
-        const response = await axios.post(endpoint, data);
+        const response = await axios.post(endpoint, { email, password, username });
         return response.data;
     } catch (err) { throw err; }
 }
@@ -34,13 +34,13 @@ async function register(data) {
  * @returns {Promise<object>}
  * @throws {Error}
  * @example
- * login({email: 'test@example.com', password: 'password'}).then((res) => { console.log(res) });
+ * login("test@example.com", "password").then((res) => { console.log(res) });
  */
-async function login(data) {
+async function login(email, password) {
     const endpoint = `${BASE_URL}/auth/login`;
 
     try {
-        const response = await axios.post(endpoint, data);
+        const response = await axios.post(endpoint, {email, password});
         return response.data;
     } catch (err) { throw err; }
 }
@@ -76,14 +76,14 @@ async function fetchProfileById(id, jwt) {
  * @returns {Promise<object>}
  * @throws {Error}
  * @example
- * uploadPost('JWT_TOKEN', { image: 'IMAGE_FILE', caption: 'CAPTION' }).then((res) => { console.log(res) });
+ * uploadPost('JWT_TOKEN', 'IMAGE', 'CAPTION' }).then((res) => { console.log(res) });
  */
-async function uploadPost(jwt, post) {
+async function uploadPost(jwt, image, caption) {
     const endpoint = `${BASE_URL}/posts/upload`;
     const formData = new FormData();
 
-    formData.append('image', post.image);
-    formData.append('caption', post.caption);
+    formData.append('image', image);
+    formData.append('caption', caption);
 
     try {
         const response = await axios.post(endpoint, formData, { 

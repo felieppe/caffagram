@@ -37,16 +37,14 @@ const Register = () => {
 
     if (!validateForm()) return;
 
-    const data = {
-      email: e.target.email.value,
-      password: e.target.password.value,
-      username: e.target.username.value
-    };
+    let email = e.target.email.value;
+    let password = e.target.password.value;
+    let username = e.target.username.value;
 
-    register(data).then((res) => {
+    register(email, password, username).then((res) => {
       let {_id, token } = res
 
-      const cookieOptions = { maxAge: 2592000, path: '/', secure: process.env.NODE_ENV === 'production', httpOnly: true }
+      const cookieOptions = { maxAge: 2592000, path: '/', secure: process.env.NODE_ENV === 'production' }
       document.cookie = `token=${token}; ${Object.keys(cookieOptions).map(key => `${key}=${cookieOptions[key]}`).join('; ')}`;
 
       setUser({ id: _id, token });
