@@ -99,7 +99,7 @@ const Register = () => {
         <button type="submit" className={styles.button}>Registrar</button>
 
         <p className={styles.login__text}>
-          Create account <Link href="/login" className={styles.login__link}>here</Link>
+          ¿Tienes una cuenta? <Link href="/login" className={styles.login__link}>Inicia Sesión</Link>
         </p>
       </form>
     </div>
