@@ -73,3 +73,35 @@
   text-decoration: none;
   margin-left: 5px;
 }
+
+@media (max-width: 768px) {
+  .form {
+    width: 80%;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .button {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo_container img {
+    width: 200px;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .form {
+    width: 90%;
+  }
+
+  .button {
+    padding: 6px;
+  }
+}

@@ -55,3 +55,35 @@
 .signup_link:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+  .login_form {
+    width: 80%;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .login_button {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo_container img {
+    width: 200px;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .login_form {
+    width: 90%;
+  }
+
+  .login_button {
+    padding: 6px;
+  }
+}

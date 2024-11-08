@@ -2,11 +2,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid black;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 10px;
+    padding: 10px;
+    margin: 0; 
+    width: 100%; 
+    box-sizing: border-box; 
 }
+
 
 .homeButton{
     margin-left: 10px; 
