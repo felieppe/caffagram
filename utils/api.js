@@ -12,7 +12,9 @@ const BASE_URL = 'http://localhost:3001/api';
 /**
  * @function register
  * @description Register a new user
- * @param {object} data 
+ * @param {string} email 
+ * @param {string} password
+ * @param {string} username
  * @returns {Promise<object>}
  * @throws {Error}
  * @example
@@ -30,7 +32,8 @@ async function register(email, password, username) {
 /**
  * @function login
  * @description Login a user
- * @param {object} data
+ * @param {string} email
+ * @param {string} password
  * @returns {Promise<object>}
  * @throws {Error}
  * @example
@@ -72,7 +75,8 @@ async function fetchProfileById(id, jwt) {
  * @function uploadPost
  * @description Upload a new post
  * @param {string} jwt
- * @param {object} post
+ * @param {file} image
+ * @param {string} caption
  * @returns {Promise<object>}
  * @throws {Error}
  * @example
@@ -123,17 +127,17 @@ async function fetchFeed(jwt) {
  * @description Comment a post
  * @param {string} id
  * @param {string} jwt
- * @param {object} comment
+ * @param {string} comment
  * @returns {Promise<object>}
  * @throws {Error}
  * @example
- * commentPost('POST_ID', 'JWT_TOKEN', { content: 'COMMENT' }).then((res) => { console.log(res) });
+ * commentPost('POST_ID', 'JWT_TOKEN', 'COMMENT').then((res) => { console.log(res) });
  */
 async function commentPost(id, jwt, comment) {
     const endpoint = `${BASE_URL}/posts/${id}/comments`;
 
     try {
-        const response = await axios.post(endpoint, comment, { 
+        const response = await axios.post(endpoint, { content: comment }, { 
             headers: {
                 'Authorization': `Bearer ${jwt}`
             }
