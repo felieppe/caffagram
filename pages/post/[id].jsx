@@ -8,11 +8,12 @@ import { faEllipsis, faHeart as faFilledHeart, faComment } from '@fortawesome/fr
 import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons';
 import Image from 'next/image';
 import Link from 'next/link';
-import { fetchFeed, likePost, removeLike, fetchProfileById } from '@/utils/api';
+import { fetchFeed, likePost, removeLike, fetchProfileById, addComment, commentPost, getCommentById } from '@/utils/api';
 import { UserContext } from '../_app';
 
 function PostView({ endpointPost = {}, jwt = '' }) {
     const [post, setPost] = useState(endpointPost);
+    const [comment, setComment] = useState('');
     const { user } = useContext(UserContext);
 
     const handleLike = (id) => {
@@ -29,6 +30,16 @@ function PostView({ endpointPost = {}, jwt = '' }) {
         if (!jwt) return;
 
         removeLike(id, jwt).then((_) => { setPost({ ...post, liked: !post.liked, likes: post.likes.filter(like => like != user.id) }); })
+    }
+
+    const handleCommentSubmit = (e) => {
+        e.preventDefault();
+        if (!jwt || comment.trim() === '') return;
+
+        commentPost(post._id, jwt, comment).then(newComment => {
+            setPost({ ...post, comments: [...post.comments, newComment] });
+            setComment('');
+        });
     }
 
     if (!user) { return <div>Loading...</div>; }
@@ -83,7 +94,7 @@ function PostView({ endpointPost = {}, jwt = '' }) {
                 </div>
 
                 <div className={styles.post__comments}>
-                    {post.comments.length > 0 ? (
+                    {/*post.comments.length > 0 ? (
                         <div>
                             <p>View all {post.comments.length} comments</p>
                             {post.comments.map(comment => (
@@ -94,8 +105,20 @@ function PostView({ endpointPost = {}, jwt = '' }) {
                         </div>
                     ) : (
                         <p>No comments yet.</p>
-                    )}
-                  </div>
+                    )*/}
+                    {console.log(getCommentById(post.comments[0], jwt).then((res) => { console.log(res) }))}
+                </div>
+
+                <form onSubmit={handleCommentSubmit} className={styles.comment_form}>
+                    <input 
+                        type="text" 
+                        value={comment} 
+                        onChange={(e) => setComment(e.target.value)} 
+                        placeholder="Add a comment..." 
+                        className={styles.comment_input}
+                    />
+                    <button type="submit" className={styles.comment_button}>Post</button>
+                </form>
             </div>
           </div>
 
