@@ -40,7 +40,7 @@ function PostView({ endpointPost = {}, jwt = '' }) {
           <div className={styles.post_move}>
             <div className={styles.post}>
                 <div className={styles.post__top}>
-                    <Link href={`/profile/${post.user.username}`}>
+                    <Link href={`/${post.user.username}`}>
                         <Image 
                             className={styles.post__top__user__img} 
                             src={post.user.profilePicture ? post.user.profilePicture : "/default-profile.webp"} 
