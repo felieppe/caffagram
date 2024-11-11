@@ -48,7 +48,7 @@ const Register = () => {
       document.cookie = `token=${token}; ${Object.keys(cookieOptions).map(key => `${key}=${cookieOptions[key]}`).join('; ')}`;
 
       setUser({ id: _id, token });
-      window.location.href = '/feed';
+      window.location.href = '/';
     }).catch((err) => {
       setError(err.response.data.message);
     })
@@ -56,7 +56,7 @@ const Register = () => {
 
   useEffect(() => {
     if (document.cookie.includes('token')) {
-      window.location.href = '/feed';
+      window.location.href = '/';
     }
   }, [])
 
