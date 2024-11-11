@@ -1,6 +1,6 @@
 import styles from '@/styles/PostView.module.css';  
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TopHeader from '@/components/TopHeader';
 import BottomHeader from '@/components/BottomHeader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,12 +8,17 @@ import { faEllipsis, faHeart as faFilledHeart, faComment } from '@fortawesome/fr
 import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons';
 import Image from 'next/image';
 import Link from 'next/link';
-import { fetchFeed, likePost, removeLike, fetchProfileById } from '@/utils/api';
+import { fetchFeed, likePost, removeLike, fetchProfileById, addComment, commentPost, getCommentById } from '@/utils/api';
 import { UserContext } from '../_app';
+import { useRouter } from 'next/router';
 
 function PostView({ endpointPost = {}, jwt = '' }) {
     const [post, setPost] = useState(endpointPost);
+    const [comment, setComment] = useState('');
+    const [comments, setComments] = useState([]);
     const { user } = useContext(UserContext);
+    const [showComments, setShowComments] = useState(false);
+    const Router = useRouter();
 
     const handleLike = (id) => {
         if (!jwt) return;
@@ -30,6 +35,34 @@ function PostView({ endpointPost = {}, jwt = '' }) {
 
         removeLike(id, jwt).then((_) => { setPost({ ...post, liked: !post.liked, likes: post.likes.filter(like => like != user.id) }); })
     }
+
+    const handleCommentSubmit = (e) => {
+        e.preventDefault();
+        if (!jwt || comment.trim() === '') return;
+
+        commentPost(post._id, jwt, comment).then(newComment => {
+            Router.reload()
+            setComment('');
+        });
+    }
+
+    const handleShowComments = () => { setShowComments(!showComments); }
+
+    useEffect(() => {
+        const fetchComments = async () => {
+            try {
+              const commentPromises = post.comments.map(commentID => 
+                getCommentById(commentID, jwt)
+              );
+              const fetchedComments = await Promise.all(commentPromises);
+              setComments(fetchedComments); 
+            } catch (error) {
+              console.error("Error fetching comments:", error);
+            }
+        };
+      
+        fetchComments();
+    }, [post.comments, jwt])
 
     if (!user) { return <div>Loading...</div>; }
 
@@ -83,19 +116,30 @@ function PostView({ endpointPost = {}, jwt = '' }) {
                 </div>
 
                 <div className={styles.post__comments}>
-                    {post.comments.length > 0 ? (
-                        <div>
-                            <p>View all {post.comments.length} comments</p>
-                            {post.comments.map(comment => (
-                                <div key={comment._id} className={styles.comment}>
-                                    <b>{comment.user.username}</b> {comment.text}
+                    { post.comments.length > 0 ? (
+                        <>
+                            { comments.slice(0, (showComments ? comments.length : 2)).map(comment => (
+                                <div key={comment._id} className={styles.comment}> 
+                                    <b>{comment.user.username}</b> {comment.content}
                                 </div>
-                            ))}
-                        </div>
+                            )) }
+                            <p onClick={handleShowComments} style={{margin: 0, marginTop: 5, opacity: '0.4'}}>{showComments ? `View all ${post.comments.length} comments` : 'Hide all comments'}</p>
+                        </>
                     ) : (
                         <p>No comments yet.</p>
-                    )}
-                  </div>
+                    )} 
+                </div>
+
+                <form onSubmit={handleCommentSubmit} className={styles.comment_form}>
+                    <input 
+                        type="text" 
+                        value={comment} 
+                        onChange={(e) => setComment(e.target.value)} 
+                        placeholder="Add a comment..." 
+                        className={styles.comment_input}
+                    />
+                    <button type="submit" className={styles.comment_button}>Post</button>
+                </form>
             </div>
           </div>
 
@@ -108,13 +152,13 @@ export default PostView;
 
 export async function getServerSideProps(context) {
     const { id } = context.query
-    if (id == null) { return { redirect: { destination: '/feed', permanent: false }} }
+    if (id == null) { return { redirect: { destination: '/', permanent: false }} }
 
     const jwt = context.req.cookies.token;
     if (jwt == null || jwt == "") { return { redirect: { destination: '/Login', permanent: false }} }
 
     const post = await fetchFeed(jwt).then((posts) => { return posts.find(post => post._id === id) });
-    if (post == undefined) { return { redirect: { destination: '/feed', permanent: false }} }
+    if (post == undefined) { return { redirect: { destination: '/', permanent: false }} }
 
     return { props: { endpointPost: (post != undefined ? post : {}), jwt } };
 }
