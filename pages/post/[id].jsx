@@ -111,7 +111,7 @@ export async function getServerSideProps(context) {
     if (id == null) { return { redirect: { destination: '/feed', permanent: false }} }
 
     const jwt = context.req.cookies.token;
-    if (jwt == null) { return { redirect: { destination: '/Login', permanent: false }} }
+    if (jwt == null || jwt == "") { return { redirect: { destination: '/Login', permanent: false }} }
 
     const post = await fetchFeed(jwt).then((posts) => { return posts.find(post => post._id === id) });
     if (post == undefined) { return { redirect: { destination: '/feed', permanent: false }} }

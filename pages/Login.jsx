@@ -1,7 +1,7 @@
 import styles from '../styles/Login.module.css';
 
 import { login } from "@/utils/api";
-import React, { useEffect, useState } from "react"; 
+import React, { useEffect, useState, useContext } from "react"; 
 import { UserContext } from "./_app";
 import Image from 'next/image';
 import Link from 'next/link';
@@ -45,13 +45,13 @@ function Login() {
         document.cookie = `token=${token}; ${Object.keys(cookieOptions).map(key => `${key}=${cookieOptions[key]}`).join('; ')}`;
 
         setUser({ id: _id, username, token }); 
-        window.location.href = '/feed';
+        window.location.href = '/';
       }}).catch((error) => {console.error(error)})
   }
   
   useEffect(() => {
     if (document.cookie.includes('token')) {
-      window.location.href = '/feed';
+      window.location.href = '/';
     }
   }, [])
 
