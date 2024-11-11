@@ -94,19 +94,21 @@ function PostView({ endpointPost = {}, jwt = '' }) {
                 </div>
 
                 <div className={styles.post__comments}>
-                    {/*post.comments.length > 0 ? (
-                        <div>
+                    { post.comments.length > 0 ? (
+                        <>
+                            { post.comments.slice(0, 3).map(commentID => {
+                                const comment = getCommentById(commentID, jwt);
+                                return (
+                                    <div key={comment} className={styles.comment}>
+                                        <b>{comment.user.username}</b> {comment.content}
+                                    </div>
+                                )
+                            }) }
                             <p>View all {post.comments.length} comments</p>
-                            {post.comments.map(comment => (
-                                <div key={comment._id} className={styles.comment}>
-                                    <b>{comment.user.username}</b> {comment.text}
-                                </div>
-                            ))}
-                        </div>
+                        </>
                     ) : (
                         <p>No comments yet.</p>
-                    )*/}
-                    {console.log(getCommentById(post.comments[0], jwt).then((res) => { console.log(res) }))}
+                    )}
                 </div>
 
                 <form onSubmit={handleCommentSubmit} className={styles.comment_form}>
