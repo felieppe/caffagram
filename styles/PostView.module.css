@@ -107,3 +107,41 @@
     align-items: center;
     width:100%;
 }
+
+.comment_form {
+    display: flex;
+    align-items: center;
+    margin: 1rem 1rem 0;
+    border-top: 1px solid #e6e6e6;
+    padding-top: 0.5rem;
+}
+
+.comment_input {
+    flex: 1;
+    border: none;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    margin-right: 0.5rem;
+}
+
+.comment_input:focus {
+    outline: none;
+    background-color: #e6e6e6;
+}
+
+.comment_button {
+    background-color: #0095f6;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.comment_button:disabled {
+    background-color: #b2dffc;
+    cursor: not-allowed;
+}
