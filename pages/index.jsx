@@ -72,7 +72,6 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                             </div>
 
                             <div className={styles.post__image}>
-                                {/* Backend should server URL with image's source too. Impossible to import dynamically every image SRC from require(). */}
                                 <Image src={"http://localhost:3001/" + post.imageUrl} alt="Post" width={350} height={300} />
                             </div>
 
@@ -107,7 +106,8 @@ export default Feed
 
 export async function getServerSideProps({ req }) {
     const jwt = req.cookies.token || "";
-    if (jwt == null) { return { redirect: { destination: '/Login', permanent: false }} }
+    console.log("jwt: ", jwt)
+    if (jwt == null || jwt == "") { return { redirect: { destination: '/Login', permanent: false }} }
 
     const posts = await fetchFeed(jwt).catch((_) => { return [] });
     return { props: { endpointPosts: (posts != undefined ? posts : []), jwt: jwt } }

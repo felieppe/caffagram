@@ -75,7 +75,7 @@ export async function getServerSideProps(context) {
     if (username == null) { return { redirect: { destination: '/feed', permanent: false }} }
 
     const jwt = context.req.cookies.token;
-    if (jwt == null) { return { redirect: { destination: '/Login', permanent: false }} }
+    if (jwt == null || jwt == "") { return { redirect: { destination: '/Login', permanent: false }} }
 
     const user = await fetchAllProfiles(jwt).then((profiles) => { return profiles.find(profile => profile.username === username) });
     if (user == undefined) { return { redirect: { destination: '/feed', permanent: false }} }
