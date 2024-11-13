@@ -7,6 +7,7 @@ import EditProfileButton from "../components/EditProfileButton";
 import EditProfilePage from "../components/EditProfilePage";
 import PhotoGallery from "../components/PhotoGallery";
 import ProfileHeader from "../components/ProfileHeader";
+import TopHeader from "@/components/TopHeader";
 
 function User({ user = {}, jwt = '' }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -89,7 +90,7 @@ function User({ user = {}, jwt = '' }) {
                 /> : null}
                 
                 <div>
-                    <TopHeaderProfile/>
+                    <TopHeader/>
                         
                     <ProfileHeader
                         username={user.username}

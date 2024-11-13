@@ -42,12 +42,12 @@ const Register = () => {
     let username = e.target.username.value;
 
     register(email, password, username).then((res) => {
-      let {_id, token } = res
+      let {_id, username, token } = res
 
       const cookieOptions = { maxAge: 2592000, path: '/', secure: process.env.NODE_ENV === 'production' }
       document.cookie = `token=${token}; ${Object.keys(cookieOptions).map(key => `${key}=${cookieOptions[key]}`).join('; ')}`;
 
-      setUser({ id: _id, token });
+      setUser({ id: _id, username, token });
       window.location.href = '/';
     }).catch((err) => {
       setError(err.response.data.message);

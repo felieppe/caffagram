@@ -10,7 +10,7 @@
     height: auto;
 }
 
-.likeButton, .createPost {
+.likeButton, .createPost, .logOut {
     margin-left: 10px; 
     background-color: white;
     border: none;
