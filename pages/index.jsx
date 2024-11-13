@@ -2,7 +2,7 @@ import styles from '../styles/Feed.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faEllipsis, faHeart as faFilledHeart, faHome, faInbox, faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faEmptyHeart, faComment } from '@fortawesome/free-regular-svg-icons'
-import { useState, useContext, useEffect } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import BottomHeader from '@/components/BottomHeader';
@@ -12,8 +12,21 @@ import { UserContext } from './_app';
 
 function Feed({ endpointPosts = [], allProfiles = [], jwt = '' }) {
     const [posts, setPosts] = useState(endpointPosts);
+    const [profileImageUrl, setProfileImageUrl] = useState('/default-profile.webp');
     const { user } = useContext(UserContext);
     const [friends, setFriends] = useState([]);
+
+    useEffect(() => {
+        if (user && jwt) {
+            fetchProfileById(user.id, jwt)
+                .then(profile => {
+                    const profilePic = profile.user.profilePicture || "/default-profile.webp";
+                    console.log("Setting profileImageUrl to:", profilePic);
+                    setProfileImageUrl(profilePic);
+                })
+                .catch(error => console.error("Error fetching profile:", error));
+        }
+    }, [user, jwt]);
 
     const handleLike = (id) => {
         if (!jwt) return;
@@ -69,7 +82,7 @@ function Feed({ endpointPosts = [], allProfiles = [], jwt = '' }) {
     return (
         <>
             <TopHeader />
-
+      
             <div className={styles.container}>
                 <div className={styles.left__menu}>
                     <ul>
@@ -159,7 +172,7 @@ function Feed({ endpointPosts = [], allProfiles = [], jwt = '' }) {
                 </div>
             </div>
 
-            <BottomHeader profileImageUrl={fetchProfileById(user.id, jwt).profilePicture || ""}/>
+            <BottomHeader profileImageUrl={profileImageUrl} />
         </>
     )
 }

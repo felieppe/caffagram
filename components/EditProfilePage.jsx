@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styles from '../styles/EditProfilePage.module.css'; // Importar correctamente el módulo CSS
+import { useState } from "react";
+import styles from '../styles/EditProfilePage.module.css';
 
 function EditProfilePage({ profileData, onSave, onCancel }) {
     const [profile, setProfile] = useState(profileData);
@@ -11,7 +11,6 @@ function EditProfilePage({ profileData, onSave, onCancel }) {
             [name]: value
         }));
     };
-
     const handleSave = () => {
         onSave(profile);
     };
@@ -33,11 +32,11 @@ function EditProfilePage({ profileData, onSave, onCancel }) {
                         />
                     </div>
                     <div className={styles.formGroup}>
-                        <label className={styles.label}>Profile Picture URL:</label>
+                        <label className={styles.label}>Profile Picture:</label>
                         <input
-                            type="text"
+                            type="string"
                             name="profilePicture"
-                            value={profile.profilePicture}
+                            //value={profile.profilePicture}
                             onChange={handleInputChange}
                             className={styles.input}
                         />
