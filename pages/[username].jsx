@@ -1,4 +1,4 @@
-import { editMyProfile, fetchAllProfiles, fetchFeed, fetchProfileById } from "@/utils/api";
+import { addFriendById, editMyProfile, fetchAllProfiles, fetchFeed, fetchProfileById, removeFriendById } from "@/utils/api";
 
 import TopHeaderProfile from "@/components/TopHeaderProfile";
 import { useEffect, useState } from "react";
@@ -22,10 +22,36 @@ function User({ user = {}, jwt = '' }) {
         setProfile(updatedProfile);
         setIsEditing(false);
 
-        editMyProfile(jwt, { username: updatedProfile.username, description: updatedProfile.description, profilePicture: updatedProfile.profilePicture }).then(() => {
+        editMyProfile(jwt, { username: updatedProfile.username, description: updatedProfile.description, profilePicture: updatedProfile.profilePicture }).then((res) => {
             console.log("Profile updated");
         }).catch((error) => { console.error(error) });
     };
+
+    const handleFollow = () => {
+        const following = profile.friends.includes(lUser.id);
+
+        if (!following) {
+            addFriendById(user._id, jwt).then(() => {
+                console.log("Friend added");
+
+                // update user friends array in state
+                setProfile((prevProfile) => ({
+                    ...prevProfile,
+                    friends: [...prevProfile.friends, lUser.id]
+                }));
+            }).catch((error) => { console.error(error) });
+        } else {
+            removeFriendById(user._id, jwt).then(() => {
+                console.log("Friend removed");
+
+                // remove from user friends array user._id
+                setProfile((prevProfile) => ({
+                    ...prevProfile,
+                    friends: prevProfile.friends.filter(friend => friend != lUser.id)
+                }));
+            }).catch((error) => { console.error(error) });
+        }
+    }
 
     useEffect(() => {
         fetchFeed(jwt).then((feed) => {
@@ -58,12 +84,13 @@ function User({ user = {}, jwt = '' }) {
                         username={user.username}
                         profilePicture={user.profilePicture ? user.profilePicture : "/default-profile.webp"}
                         posts={posts.length}
-                        friends={user.friends.length}
+                        friends={profile.friends.length}
                         description={profile.description}
                         onEdit={handleEditProfile}
                     />
-                    
+
                     {isOp && <EditProfileButton onEdit={handleEditProfile} /> }
+                    {!isOp && <button onClick={handleFollow} style={{width: '100%', padding: '10px', backgroundColor: '#0095f6', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer'}}>{profile.friends.includes(lUser.id) ? "Following" : "Follow"}</button>}
                     {posts.length > 0 ? <PhotoGallery photos={posts} /> : <p style={{width: '100%', textAlign: "center", color: '#808080'}}>No posts yet</p>}
                         
                     <BottomHeader profileImageUrl={fetchProfileById(lUser.id, jwt).profilePicture || ""}/>

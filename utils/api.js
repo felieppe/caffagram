@@ -201,7 +201,7 @@ async function addFriendById(id, jwt) {
     const endpoint = `${BASE_URL}/user/add-friend/${id}`;
 
     try {
-        const response = await axios.post(endpoint, {
+        const response = await axios.post(endpoint, null, {
             headers: {
                 'Authorization': `Bearer ${jwt}`
             }
