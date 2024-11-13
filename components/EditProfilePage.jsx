@@ -11,21 +11,6 @@ function EditProfilePage({ profileData, onSave, onCancel }) {
             [name]: value
         }));
     };
-
-    const handleFileChange = (e) =>{
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setProfile((prevProfile) => ({
-                    ...prevProfile,
-                    profilePicture: reader.result
-                }));
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
     const handleSave = () => {
         onSave(profile);
     };
@@ -49,10 +34,10 @@ function EditProfilePage({ profileData, onSave, onCancel }) {
                     <div className={styles.formGroup}>
                         <label className={styles.label}>Profile Picture:</label>
                         <input
-                            type="file"
+                            type="string"
                             name="profilePicture"
                             //value={profile.profilePicture}
-                            onChange={handleFileChange}
+                            onChange={handleInputChange}
                             className={styles.input}
                         />
                     </div>

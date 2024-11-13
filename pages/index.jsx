@@ -90,7 +90,7 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                             </div>
 
                             <div className={styles.post__comments}>
-                                { post.comments.length > 0 ? `View all {post.comments.length} comments` : null}
+                                { post.comments.length > 0 ? `View all ${post.comments.length} comments` : null}
                             </div>
                         </div>
                     ))}
