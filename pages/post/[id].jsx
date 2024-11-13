@@ -48,23 +48,7 @@ function PostView({ endpointPost = {}, jwt = '' }) {
 
     const handleShowComments = () => { setShowComments(!showComments); }
 
-    useEffect(() => {
-        const fetchComments = async () => {
-            try {
-              const commentPromises = post.comments.map(commentID => 
-                getCommentById(commentID, jwt)
-              );
-              const fetchedComments = await Promise.all(commentPromises);
-              setComments(fetchedComments); 
-            } catch (error) {
-              console.error("Error fetching comments:", error);
-            }
-        };
-      
-        fetchComments();
-    }, [post.comments, jwt])
-
-    if (!user) { return <div>Loading...</div>; }
+    if (!user || !post) { return <div>Loading...</div>; }
 
     return (
         <>
@@ -118,12 +102,12 @@ function PostView({ endpointPost = {}, jwt = '' }) {
                 <div className={styles.post__comments}>
                     { post.comments.length > 0 ? (
                         <>
-                            { comments.slice(0, (showComments ? comments.length : 2)).map(comment => (
+                            { showComments && post.comments.map(comment => (
                                 <div key={comment._id} className={styles.comment}> 
                                     <b>{comment.user.username}</b> {comment.content}
                                 </div>
                             )) }
-                            <p onClick={handleShowComments} style={{margin: 0, marginTop: 5, opacity: '0.4'}}>{showComments ? `View all ${post.comments.length} comments` : 'Hide all comments'}</p>
+                            <p onClick={handleShowComments} style={{margin: 0, marginTop: 5, opacity: '0.4'}}>{showComments == false ? `View all ${post.comments.length} comments` : 'Hide all comments'}</p>
                         </>
                     ) : (
                         <p>No comments yet.</p>
