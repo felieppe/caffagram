@@ -2,7 +2,7 @@ import styles from '../styles/Feed.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faHeart as faFilledHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faEmptyHeart, faComment } from '@fortawesome/free-regular-svg-icons'
-import { useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import BottomHeader from '@/components/BottomHeader';
@@ -12,7 +12,20 @@ import { UserContext } from './_app';
 
 function Feed({ endpointPosts = [], jwt = '' }) {
     const [posts, setPosts] = useState(endpointPosts);
+    const [profileImageUrl, setProfileImageUrl] = useState('/default-profile.webp');
     const { user } = useContext(UserContext);
+
+    useEffect(() => {
+        if (user && jwt) {
+            fetchProfileById(user.id, jwt)
+                .then(profile => {
+                    const profilePic = profile.user.profilePicture || "/default-profile.webp";
+                    console.log("Setting profileImageUrl to:", profilePic);
+                    setProfileImageUrl(profilePic);
+                })
+                .catch(error => console.error("Error fetching profile:", error));
+        }
+    }, [user, jwt]);
 
     const handleLike = (id) => {
         if (!jwt) return;
@@ -61,7 +74,7 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                                     <Link href={`/${post.user.username}`}>
                                         {/* I suppose this wont work. Backend does not server images URL well, just gives source path. */}
                                         {/* It is not performance-friendly to fetch twice the profile just for getting the profile picture URL. */}
-                                        <Image className={styles.post__top__user__img} src={fetchProfileById(post.user._id, jwt).profilePicture ? fetchProfileById(post.user._id, jwt).profilePicture : "/default-profile.webp"} alt="User" width={30} height={30} />
+                                        <Image className={styles.post__top__user__img} src={post.user.profilePicture ? post.user.profilePicture : "/default-profile.webp"} alt="User" width={30} height={30} />
                                     </Link>
                                     <p>@{post.user.username}</p>
                                 </div>
@@ -97,7 +110,7 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                 </div>
             </div>
 
-            <BottomHeader profileImageUrl={fetchProfileById(user.id, jwt).profilePicture || ""}/>
+            <BottomHeader profileImageUrl={profileImageUrl} />
         </>
     )
 }

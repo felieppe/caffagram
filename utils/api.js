@@ -114,8 +114,18 @@ async function fetchFeed(jwt) {
                 'Authorization': `Bearer ${jwt}`
             }
         });
-        return response.data;
-    } catch (err) { throw err; }
+        const posts = response.data.map(post => ({
+            ...post,
+            user: {
+                ...post.user,
+                profilePicture: post.user.profilePicture || '/default-profile.webp'
+            }
+        }));
+
+        return posts;
+    } catch (err) {
+        throw err;
+    }
 }
 
 /**
