@@ -15,7 +15,7 @@ function BottomHeader({ profileImageUrl }){
             <button onClick={handleHomeClick}  className={styles.homeButton}>
                 <FontAwesomeIcon icon={faHouse} />
             </button>
-            <Image id={styles.Foto} src={profileImageUrl } alt="Foto de Perfil" width={30} height={30}/>
+            <Image id={styles.Foto} src={profileImageUrl || "/default-profile.webp"} alt="Foto de Perfil" width={30} height={30}/>
         </div>
     )
 }

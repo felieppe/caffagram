@@ -14,6 +14,7 @@ function User({ user = {}, jwt = '' }) {
     const [posts, setPosts] = useState([]);
     const [isOp, setIsOp] = useState(false);
     const [lUser, setLUser] = useState(null);
+    const [profileImageUrl, setProfileImageUrl] = useState('/default-profile.webp');
 
     const handleEditProfile = () => { setIsEditing(true); };
     const handleCancelEdit = () => { setIsEditing(false); }
@@ -64,6 +65,16 @@ function User({ user = {}, jwt = '' }) {
 
         if (localUser == null) { setIsOp(false); }
         else if (localUser.username == user.username) { setIsOp(true); }
+
+        if (localUser && jwt) {
+            fetchProfileById(localUser.id, jwt)
+                .then(profile => {
+                    const profilePic = profile.user.profilePicture || "/default-profile.webp";
+                    console.log("Setting profileImageUrl to:", profilePic);
+                    setProfileImageUrl(profilePic);
+                })
+                .catch(error => console.error("Error fetching profile:", error));
+        }
     }, [user, jwt])
 
     if (!lUser) { return <div>Loading...</div> }
@@ -93,7 +104,7 @@ function User({ user = {}, jwt = '' }) {
                     {!isOp && <button onClick={handleFollow} style={{width: '100%', padding: '10px', backgroundColor: '#0095f6', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer'}}>{profile.friends.includes(lUser.id) ? "Following" : "Follow"}</button>}
                     {posts.length > 0 ? <PhotoGallery photos={posts} /> : <p style={{width: '100%', textAlign: "center", color: '#808080'}}>No posts yet</p>}
                         
-                    <BottomHeader profileImageUrl={fetchProfileById(lUser.id, jwt).profilePicture || ""}/>
+                    <BottomHeader profileImageUrl={profileImageUrl}/>
                 </div>
             </div>
         </>
