@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styles from '../styles/EditProfilePage.module.css'; // Importar correctamente el módulo CSS
+import { useState } from "react";
+import styles from '../styles/EditProfilePage.module.css';
 
 function EditProfilePage({ profileData, onSave, onCancel }) {
     const [profile, setProfile] = useState(profileData);

@@ -221,14 +221,14 @@ async function addFriendById(id, jwt) {
  * editMyProfile('JWT_TOKEN', {username: 'NEW_USERNAME', description: 'NEW_DESCRIPTION', profilePicture: 'NEW_PROFILE_PICTURE'}).then((res) => { console.log(res) });
  */
 async function editMyProfile(jwt, data) {
-    const endpoint = `${BASE_URL}/profile/edit`;
+    const endpoint = `${BASE_URL}/user/profile/edit`;
 
     try {
-        const response = await axios.post(endpoint, {
+        const response = await axios.put(endpoint, data, {
             headers: {
                 'Authorization': `Bearer ${jwt}`
             }
-        }, data);
+        });
         return response.data;
     } catch (err) { throw err }
 }
@@ -302,4 +302,5 @@ async function removeFriendById(id, jwt) {
     } catch (err) { throw err }
 }
 
-export { register, login, fetchProfileById, uploadPost, fetchFeed, commentPost, likePost, fetchAllProfiles, addFriendById, editMyProfile, getCommentById, removeLike, removeFriendById };
+export { addFriendById, commentPost, editMyProfile, fetchAllProfiles, fetchFeed, fetchProfileById, getCommentById, likePost, login, register, removeFriendById, removeLike, uploadPost };
+

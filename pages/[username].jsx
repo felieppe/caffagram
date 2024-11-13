@@ -1,15 +1,16 @@
-import { fetchAllProfiles, fetchFeed, fetchProfileById } from "@/utils/api";
+import { editMyProfile, fetchAllProfiles, fetchFeed, fetchProfileById } from "@/utils/api";
 
-import ProfileHeader from "../components/ProfileHeader";
-import EditProfileButton from "../components/EditProfileButton";
-import BottomHeader from "../components/BottomHeader";
-import PhotoGallery from "../components/PhotoGallery";
 import TopHeaderProfile from "@/components/TopHeaderProfile";
-import EditProfilePage from "../components/EditProfilePage";
 import { useEffect, useState } from "react";
+import BottomHeader from "../components/BottomHeader";
+import EditProfileButton from "../components/EditProfileButton";
+import EditProfilePage from "../components/EditProfilePage";
+import PhotoGallery from "../components/PhotoGallery";
+import ProfileHeader from "../components/ProfileHeader";
 
 function User({ user = {}, jwt = '' }) {
     const [isEditing, setIsEditing] = useState(false);
+    const [profile, setProfile] = useState(user);
     const [posts, setPosts] = useState([]);
     const [isOp, setIsOp] = useState(false);
     const [lUser, setLUser] = useState(null);
@@ -20,6 +21,10 @@ function User({ user = {}, jwt = '' }) {
     const handleSaveProfile = (updatedProfile) => {
         setProfile(updatedProfile);
         setIsEditing(false);
+
+        editMyProfile(jwt, { username: updatedProfile.username, description: updatedProfile.description, profilePicture: updatedProfile.profilePicture }).then(() => {
+            console.log("Profile updated");
+        }).catch((error) => { console.error(error) });
     };
 
     useEffect(() => {
@@ -54,7 +59,7 @@ function User({ user = {}, jwt = '' }) {
                         profilePicture={user.profilePicture ? user.profilePicture : "/default-profile.webp"}
                         posts={posts.length}
                         friends={user.friends.length}
-                        description={user.description}
+                        description={profile.description}
                         onEdit={handleEditProfile}
                     />
                     
