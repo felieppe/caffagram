@@ -16,5 +16,5 @@ export function middleware(req) {
   }
   
 export const config = {
-  matcher: ['/feed/:path*', '/post/:path*'], 
+  matcher: ['/post/:path*'], 
 };
