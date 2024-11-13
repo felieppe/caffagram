@@ -2,17 +2,18 @@ import styles from '../styles/Feed.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faEllipsis, faHeart as faFilledHeart, faHome, faInbox, faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faEmptyHeart, faComment } from '@fortawesome/free-regular-svg-icons'
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import BottomHeader from '@/components/BottomHeader';
 import TopHeader from '@/components/TopHeader';
-import { fetchFeed, fetchProfileById, likePost, removeLike } from '@/utils/api';
+import { fetchAllProfiles, fetchFeed, fetchProfileById, likePost, removeLike } from '@/utils/api';
 import { UserContext } from './_app';
 
-function Feed({ endpointPosts = [], jwt = '' }) {
+function Feed({ endpointPosts = [], allProfiles = [], jwt = '' }) {
     const [posts, setPosts] = useState(endpointPosts);
     const { user } = useContext(UserContext);
+    const [friends, setFriends] = useState([]);
 
     const handleLike = (id) => {
         if (!jwt) return;
@@ -47,10 +48,21 @@ function Feed({ endpointPosts = [], jwt = '' }) {
     }
 
     const handleLogout = () => {
-        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTsC; path=/;';
         localStorage.removeItem('user');
         window.location.href = '/Login';
     }
+
+    useEffect(() => {
+        if (user) {
+            allProfiles.map((profile) => {
+                if (profile.friends.includes(user.id)) {
+                    setFriends([...friends, profile]);
+                }
+            })
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user, allProfiles])
 
     if (!user) { return <div>Loading...</div>; }
 
@@ -118,11 +130,31 @@ function Feed({ endpointPosts = [], jwt = '' }) {
                 <div className={styles.right__menu}>
                     <div className={styles.right__menu__user}>
                         <Image src={fetchProfileById(user.id, jwt).profilePicture ? fetchProfileById(user.id, jwt).profilePicture : "/default-profile.webp"} alt="User" width={35} height={35} />
-                        @{user.username}
+                        <p>@{user.username}</p>
 
                         <div className={styles.right__menu__user__logout}>
-                            <Link href="/Login" onClick={handleLogout}>Logout</Link>
+                            <Link href="/Login" onClick={handleLogout} style={{textDecoration: 'none', color: '#6E260E', fontSize: "10pt", fontWeight: "bold"}}>Logout</Link>
                         </div>
+                    </div>
+
+                    <div className={styles.right__menu__friends}>
+                        <h3>Friends</h3>
+
+                        {friends.length > 0 ? (<ul className={styles.right__menu__friends__list}>
+                            { friends.slice(0, 3).map(friend => {
+                                
+                                return (
+                                    <li key={friend._id} className={styles.user__friend}>
+                                        <Link href={"/" + friend.username} style={{display: "flex", alignItems: "center"}}><Image src={friend.profilePicture ? friend.profilePicture : "/default-profile.webp"} alt="User" width={30} height={30} /></Link>
+                                        <Link href={"/" + friend.username} className={styles.user__friend__name}><p>@{friend.username}</p></Link>
+                                    </li>
+                                )
+                            }) }
+                        </ul>) : (
+                            <p className={styles.right__menu__friends__empty}>No friends yet.</p>
+                        )}
+
+                        { friends.length > 3 ? <Link href={"/" + user.username + "/friends"} className={styles.right__menu__friends__alot}><p>View all your friends</p></Link> : null }
                     </div>
                 </div>
             </div>
@@ -136,9 +168,10 @@ export default Feed
 
 export async function getServerSideProps({ req }) {
     const jwt = req.cookies.token || "";
-    console.log("jwt: ", jwt)
     if (jwt == null || jwt == "") { return { redirect: { destination: '/Login', permanent: false }} }
 
     const posts = await fetchFeed(jwt).catch((_) => { return [] });
-    return { props: { endpointPosts: (posts != undefined ? posts : []), jwt: jwt } }
+    const profiles = await fetchAllProfiles(jwt).catch((_) => { return [] });
+
+    return { props: { endpointPosts: (posts != undefined ? posts : []), allProfiles: profiles, jwt: jwt } }
 }
