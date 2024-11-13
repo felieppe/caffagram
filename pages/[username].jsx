@@ -7,6 +7,7 @@ import PhotoGallery from "../components/PhotoGallery";
 import TopHeaderProfile from "@/components/TopHeaderProfile";
 import EditProfilePage from "../components/EditProfilePage";
 import { useEffect, useState } from "react";
+import TopHeader from "@/components/TopHeader";
 
 function User({ user = {}, jwt = '' }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -47,7 +48,7 @@ function User({ user = {}, jwt = '' }) {
                 /> : null}
                 
                 <div>
-                    <TopHeaderProfile/>
+                    <TopHeader/>
                         
                     <ProfileHeader
                         username={user.username}
