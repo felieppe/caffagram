@@ -96,6 +96,7 @@ function Notifications({ jwt = '' }) {
     useEffect(() => { 
         if (isFirstRender.current) { isFirstRender.current = false; return; }
         fetchNotifications();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
      }, [filter])
 
     if (!user) { return <div>Loading...</div>; }
@@ -129,7 +130,7 @@ function Notifications({ jwt = '' }) {
                                     </div>
                                     <p>{notification.msg}</p>
 
-                                    {notification.post != null ? <Image className={styles.notification__post} alt="Post" src={"http://localhost:3001/" + notification.post.imageUrl} width={30} height={30}/> : null}
+                                    {notification.post != null ? <Link href={"/post/" + notification.post._id}><Image className={styles.notification__post} alt="Post" src={"http://localhost:3001/" + notification.post.imageUrl} width={30} height={30}/></Link> : null}
                                 </div>
                             )
                         }) }
