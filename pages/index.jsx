@@ -1,6 +1,6 @@
 import styles from '../styles/Feed.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faEllipsis, faHeart as faFilledHeart, faHome, faInbox, faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faHeart as faFilledHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faEmptyHeart, faComment } from '@fortawesome/free-regular-svg-icons'
 import { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
@@ -9,6 +9,7 @@ import BottomHeader from '@/components/BottomHeader';
 import TopHeader from '@/components/TopHeader';
 import { fetchAllProfiles, fetchFeed, fetchProfileById, likePost, removeLike } from '@/utils/api';
 import { UserContext } from './_app';
+import LeftNavbar from '@/components/menus/LeftNavbar';
 
 function Feed({ endpointPosts = [], allProfiles = [], jwt = '' }) {
     const [posts, setPosts] = useState(endpointPosts);
@@ -84,16 +85,7 @@ function Feed({ endpointPosts = [], allProfiles = [], jwt = '' }) {
             <TopHeader />
       
             <div className={styles.container}>
-                <div className={styles.left__menu}>
-                    <ul>
-                        {/* Near every Link redirects to / because not handler of that pages are created. */}
-                        <li className={styles.left__menu__active}><Link href="/"><FontAwesomeIcon icon={faHome}/> Home</Link></li>
-                        <li><Link href="/"><FontAwesomeIcon icon={faMagnifyingGlass} /> Explore</Link></li>
-                        <li><Link href="/"><FontAwesomeIcon icon={faInbox} /> Messages</Link></li>
-                        <li><Link href="/"><FontAwesomeIcon icon={faBell} /> Notifications</Link></li>
-                        <li><Link href={`/` + user.username}><FontAwesomeIcon icon={faUser} /> Profile</Link></li>
-                    </ul>
-                </div>
+                <LeftNavbar user={user} actual={"HOME"}/>
 
                 <div className={styles.feed}>
                     <div className={styles.posts}>
