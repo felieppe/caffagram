@@ -26,6 +26,7 @@ function Explore({ jwt = '' }) {
 
     useEffect(() => {
         handleSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     if (!user) { return <div>Loading...</div>; }
@@ -49,7 +50,7 @@ function Explore({ jwt = '' }) {
                         { profiles.map((profile) => (
                             <div key={profile.id} className={styles.result}>
                                 <Link href={`/${profile.username}`}>
-                                    <Image src={profile.profilePicture ? profile.profilePicture : "/default-profile.webp"} width={30} height={30}/>
+                                    <Image alt="User" src={profile.profilePicture ? profile.profilePicture : "/default-profile.webp"} width={30} height={30}/>
                                     
                                     <div className={styles.result__info}>
                                         <h3>{profile.username}</h3>

@@ -120,7 +120,7 @@ function Notifications({ jwt = '' }) {
                 <div className={styles.notifications}>
                     <div className={styles.notifications__header}>
                         <h1>Notifications</h1>
-                        <p>See what's happening</p>
+                        <p>See what&apos;s happening</p>
                     </div>
 
                     <div className={styles.notifications__filters}>
