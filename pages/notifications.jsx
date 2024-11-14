@@ -24,17 +24,21 @@ function Notifications({ jwt = '' }) {
     
     function fetchFollowsNotifications() {
         fetchProfileById(user.id, jwt).then((myProfile) => {
+            let notis = []
             if (myProfile.user.friends.length > 0) {
                 const friends = myProfile.user.friends;
                 friends.forEach((friend) => {
                     if (friend._id == user.id) { return; }
-                    setNotifications([...notifications, { id: v4(), type: 'FOLLOW', user: friend, msg: `${friend.username} has started following you!` }])
+                    notis.push({ id: v4(), type: 'FOLLOW', user: friend, msg: `${friend.username} has started following you!` })
                 })
             }
+
+            setNotifications(prev => [...prev, ...notis])
         }).catch((error) => { console.error("error", error); });
     }
     function fetchLikesNotifications() {
         fetchProfileById(user.id, jwt).then((myProfile) => {
+            let notis = []
             if (myProfile.posts.length > 0) {
                 const posts = myProfile.posts;
                 posts.forEach((post) => {
@@ -43,16 +47,19 @@ function Notifications({ jwt = '' }) {
                         likes.forEach((like) => {
                             fetchProfileById(like, jwt).then((likedBy) => {
                                 if (likedBy.user._id == user.id) { return; }
-                                setNotifications([...notifications, { id: v4(), type: 'LIKE', user: likedBy.user, msg: `${likedBy.user.username} has liked your post!`, post: post }])
+                                notis.push({ id: v4(), type: 'LIKE', user: likedBy.user, msg: `${likedBy.user.username} has liked your post!`, post: post })
                             })
                         })
                     }
                 })
             }
+
+            setNotifications(prev => [...prev, ...notis])
         })
     }
     function fetchCommentsNotifications() {
         fetchProfileById(user.id, jwt).then((myProfile) => {
+            let notis = []
             if (myProfile.posts.length > 0) {
                 const posts = myProfile.posts;
                 posts.forEach((post) => {
@@ -62,13 +69,15 @@ function Notifications({ jwt = '' }) {
                             getCommentById(comment, jwt).then((comment) => {
                                 fetchProfileById(comment.user.id, jwt).then((commentedBy) => {
                                     if (commentedBy.user._id == user.id) { return; }
-                                    setNotifications([...notifications, { id: v4(), type: 'COMMENT', user: commentedBy.user, msg: `${commentedBy.user.username} commented "${comment.content}" on your post!`, post: post }])
+                                    notis.push({ id: v4(), type: 'COMMENT', user: commentedBy.user, msg: `${commentedBy.user.username} commented "${comment.content}" on your post!`, post: post })
                                 })
                             })
                         })
                     }
                 })
             }
+
+            setNotifications(prev => [...prev, ...notis])
         })
     }
 
