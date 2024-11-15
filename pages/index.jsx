@@ -1,6 +1,6 @@
 import styles from '../styles/Feed.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faEllipsis, faHeart as faFilledHeart, faHome, faInbox, faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faHeart as faFilledHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faEmptyHeart, faComment } from '@fortawesome/free-regular-svg-icons'
 import { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
@@ -9,6 +9,8 @@ import BottomHeader from '@/components/BottomHeader';
 import TopHeader from '@/components/TopHeader';
 import { fetchAllProfiles, fetchFeed, fetchProfileById, likePost, removeLike } from '@/utils/api';
 import { UserContext } from './_app';
+import LeftNavbar from '@/components/menus/LeftNavbar';
+import RightProfileBar from '@/components/menus/RightProfileBar';
 
 function Feed({ endpointPosts = [], allProfiles = [], jwt = '' }) {
     const [posts, setPosts] = useState(endpointPosts);
@@ -84,16 +86,7 @@ function Feed({ endpointPosts = [], allProfiles = [], jwt = '' }) {
             <TopHeader />
       
             <div className={styles.container}>
-                <div className={styles.left__menu}>
-                    <ul>
-                        {/* Near every Link redirects to / because not handler of that pages are created. */}
-                        <li className={styles.left__menu__active}><Link href="/"><FontAwesomeIcon icon={faHome}/> Home</Link></li>
-                        <li><Link href="/"><FontAwesomeIcon icon={faMagnifyingGlass} /> Explore</Link></li>
-                        <li><Link href="/"><FontAwesomeIcon icon={faInbox} /> Messages</Link></li>
-                        <li><Link href="/"><FontAwesomeIcon icon={faBell} /> Notifications</Link></li>
-                        <li><Link href={`/` + user.username}><FontAwesomeIcon icon={faUser} /> Profile</Link></li>
-                    </ul>
-                </div>
+                <LeftNavbar user={user} actual={"HOME"}/>
 
                 <div className={styles.feed}>
                     <div className={styles.posts}>
@@ -140,36 +133,7 @@ function Feed({ endpointPosts = [], allProfiles = [], jwt = '' }) {
                     </div>
                 </div>
 
-                <div className={styles.right__menu}>
-                    <div className={styles.right__menu__user}>
-                        <Image src={fetchProfileById(user.id, jwt).profilePicture ? fetchProfileById(user.id, jwt).profilePicture : "/default-profile.webp"} alt="User" width={35} height={35} />
-                        <p>@{user.username}</p>
-
-                        <div className={styles.right__menu__user__logout}>
-                            <Link href="/Login" onClick={handleLogout} style={{textDecoration: 'none', color: '#6E260E', fontSize: "10pt", fontWeight: "bold"}}>Logout</Link>
-                        </div>
-                    </div>
-
-                    <div className={styles.right__menu__friends}>
-                        <h3>Friends</h3>
-
-                        {friends.length > 0 ? (<ul className={styles.right__menu__friends__list}>
-                            { friends.slice(0, 3).map(friend => {
-                                
-                                return (
-                                    <li key={friend._id} className={styles.user__friend}>
-                                        <Link href={"/" + friend.username} style={{display: "flex", alignItems: "center"}}><Image src={friend.profilePicture ? friend.profilePicture : "/default-profile.webp"} alt="User" width={30} height={30} /></Link>
-                                        <Link href={"/" + friend.username} className={styles.user__friend__name}><p>@{friend.username}</p></Link>
-                                    </li>
-                                )
-                            }) }
-                        </ul>) : (
-                            <p className={styles.right__menu__friends__empty}>No friends yet.</p>
-                        )}
-
-                        { friends.length > 3 ? <Link href={"/" + user.username + "/friends"} className={styles.right__menu__friends__alot}><p>View all your friends</p></Link> : null }
-                    </div>
-                </div>
+                <RightProfileBar user={user} jwt={jwt} friends={friends} handleLogout={handleLogout}/>
             </div>
 
             <BottomHeader profileImageUrl={profileImageUrl} />
