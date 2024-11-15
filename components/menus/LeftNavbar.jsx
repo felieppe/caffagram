@@ -13,7 +13,7 @@ function LeftNavbar({ user, actual }) {
                     <li className={actual == "HOME" ? styles.left__menu__active : null}><Link href="/"><FontAwesomeIcon icon={faHome}/> Home</Link></li>
                     <li className={actual == "EXPLORE" ? styles.left__menu__active : null}><Link href="/explore"><FontAwesomeIcon icon={faMagnifyingGlass} /> Explore</Link></li>
                     <li className={actual == "MESSAGES" ? styles.left__menu__active : null}><Link href="/"><FontAwesomeIcon icon={faInbox} /> Messages</Link></li>
-                    <li className={actual == "NOTIFICATIONS" ? styles.left__menu__active : null}><Link href="/"><FontAwesomeIcon icon={faBell} /> Notifications</Link></li>
+                    <li className={actual == "NOTIFICATIONS" ? styles.left__menu__active : null}><Link href="/notifications"><FontAwesomeIcon icon={faBell} /> Notifications</Link></li>
                     <li className={actual == "PROFILE" ? styles.left__menu__active : null}><Link href={`/` + user.username}><FontAwesomeIcon icon={faUser} /> Profile</Link></li>
                 </ul>
             </div>
