@@ -2,11 +2,11 @@ import { addFriendById, editMyProfile, fetchAllProfiles, fetchFeed, fetchProfile
 
 import TopHeaderProfile from "@/components/TopHeaderProfile";
 import { useEffect, useState } from "react";
-import BottomHeader from "../components/BottomHeader";
-import EditProfileButton from "../components/EditProfileButton";
-import EditProfilePage from "../components/EditProfilePage";
-import PhotoGallery from "../components/PhotoGallery";
-import ProfileHeader from "../components/ProfileHeader";
+import BottomHeader from "@/components/BottomHeader";
+import EditProfileButton from "@/components/EditProfileButton";
+import EditProfilePage from "@/components/EditProfilePage";
+import PhotoGallery from "@/components/PhotoGallery";
+import ProfileHeader from "@/components/ProfileHeader";
 import TopHeader from "@/components/TopHeader";
 
 function User({ user = {}, jwt = '' }) {
