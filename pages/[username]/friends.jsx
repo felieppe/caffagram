@@ -26,13 +26,13 @@ function ProfileFriends({ user = {}, jwt = '' }) {
             <TopHeader />
 
             <div className={styles.container}>
-                <LeftNavbar user={user} actual={"dss"}/>
+                <LeftNavbar user={user} actual={"FRIENDS"}/>
 
                 <div className={styles.friends}>
                     <div className={styles.friends__user}>
                         <Image src={user.profilePicture ? user.profilePicture : "/default-profile.webp"} width={75} height={75} alt='User'/>
                         <div className={styles.friend__user__info}>
-                            <h1>@{user.username}'s friends list</h1>
+                            <h1>@{user.username}&apos;s friends list</h1>
                             <p>(You have {friends.length} friends)</p>
                         </div>
                     </div>
